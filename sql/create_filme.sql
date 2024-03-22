@@ -1,0 +1,22 @@
+create table if not exists filme (
+   Nummer integer primary key AUTOINCREMENT,
+   Autor varchar(100) NOT NULL,
+   Titel varchar(100) NOT NULL,
+   Genre varchar(100),
+   SubgenreRomane varchar(100),
+   Format varchar(100),
+   Verlag varchar(100),
+   Laenge varchar(10),
+   ISBN VARCHAR(15),
+   Jahr int,
+   Preis float,
+   Standort varchar(100),
+   Inhaltsangabe varchar(2500),
+   Bemerkungen varchar(2500),
+   Subtitel varchar(100),
+   SubgenreSachbuchRatgeber varchar(100),
+   SubgenreRatgeber varchar(100),
+   Auflage int,
+   Schlagw varchar(100),
+   Bild varchar(250)
+);

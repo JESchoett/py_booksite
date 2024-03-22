@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Bücher{% endblock %}
+{% block content %}
+<!--Using Boostrap classes for styling here-->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Welcome</h1>
+        {{ for book in book_list }}
+        <p> {{ book }} </p>
+        {{ forend }}
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('index') }} ">Zurück</a>
+    </div>
+</div>
+{% endblock %}

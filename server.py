@@ -5,20 +5,12 @@ dependencys im requirements.txt
 from flask import Flask, render_template, current_app, g
 from flask_bootstrap import Bootstrap
 
-#zum Aufruf der .env Datei
-import os
-from dotenv import load_dotenv
 import datetime
 
 #Import Classes
-from flaskr.db import get_db, close_db
-from flaskr.LoginForm import LoginForm
-
-app = Flask(__name__)
-#get the Bot Token from a .env file
-load_dotenv()
-app.secret_key = os.getenv('APP_SECRET_KEY')
-Bootstrap(app)
+from __init__ import create_app
+from db import get_db, close_db
+from LoginForm import LoginForm
 
 
 @app.route('/')
@@ -51,4 +43,6 @@ def book_overview():
 
 
 if __name__ == "__main__":
+    app=create_app()
+    Bootstrap(app)
     app.run(debug=True)

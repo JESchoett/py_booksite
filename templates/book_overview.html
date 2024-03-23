@@ -4,10 +4,11 @@
 <!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
     <div class="container">
-        <h1>Welcome</h1>
-        {{ for book in book_list }}
-        <p> {{ book }} </p>
-        {{ forend }}
+        <ul>
+            {% for book in all_books %}
+            <li> {{ book }} </li>
+            {% endfor %}
+        </ul>
         <a class="btn btn-primary btn-lg" href=" {{ url_for('index') }} ">Zurück</a>
     </div>
 </div>

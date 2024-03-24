@@ -26,7 +26,7 @@ class Film(db.Model):
     Bild = db.Column(db.Text(250))
 
     def __repr__(self):
-        return f'Film mit Titel {self.Titel}'
+        return self
 
 class Book(db.Model):
     __tablename__ = 'buecher'
@@ -55,4 +55,4 @@ class Book(db.Model):
     Seiten = db.Column(db.Integer)
 
     def __repr__(self):
-        return f'Buch mit Titel {self.Titel}'
+        return self

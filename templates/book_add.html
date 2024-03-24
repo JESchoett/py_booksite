@@ -1,14 +1,12 @@
 {% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
 {% block title %}Bücher Übersicht{% endblock %}
 {% block content %}
 <!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
     <div class="container">
-        <ul>
-            {% for book in all_books %}
-            <li> {{ book['Titel'] }} </li>
-            {% endfor %}
-        </ul>
+        <h1>Neues Buch</h1>
+        {{ render_form(form) }}
     </div>
 </div>
 {% endblock %}

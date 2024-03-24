@@ -9,11 +9,14 @@
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
     {% endblock %}
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Default{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="static/CSS/style.css">
 </head>
 
 <body>
+    <div>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('index') }} ">Home</a>
+    </div>
     {% block content %}{% endblock %}
 </body>
 

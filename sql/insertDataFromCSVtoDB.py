@@ -4,8 +4,9 @@ import sqlite3
 # Connect to SQLite database
 conn = sqlite3.connect(input('database path?: '))
 cursor = conn.cursor()
+csv = input('csv path?: ')
 
-with open(input('csv path?: ')) as csvfile:
+with open(csv) as csvfile:
     reader = csv.DictReader(csvfile, delimiter=';')
     for row in reader:
         if row['Preis'].isspace() or row['Preis'] == "":

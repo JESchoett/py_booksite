@@ -1,32 +1,73 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
+from flask_login import login_user, logout_user, current_user, login_required
+
 from sqlalchemy import text
 
 import datetime
 
 #classes
-from models import Book, Film
+from models import Book, User
 from loginForm import LoginForm
 from bookForm import BookForm
+from signupForm import SignupForm
 
-def register_routes(app, db):
+def register_routes(app, db, bcrypt):
 
     @app.route('/')
     def index():
         currentYear = datetime.datetime.now().year
-        return render_template('index.html', currentYear=currentYear)
+
+        if current_user.is_authenticated:
+            user=str(current_user.username)
+        else:
+            user="no user is loged in"
+
+        return render_template('index.html', currentYear=currentYear, user=user)
 
     #login needs to be implemented
-    @app.route("/login", methods=['GET', 'POST'])
-    def login():
+    @app.route("/signup", methods=['GET', 'POST'])
+    def signup_site():
+        signup_form = SignupForm()
+        if signup_form.validate_on_submit():
+            #check if there is a user in the database with the picked name
+            user = User.query.filter(User.username == signup_form.username.data).first()
+            if user:
+                error = "Username allready taken"
+                return render_template("signup_site.html", form=signup_form, error=error)
+
+            hashed_password = bcrypt.generate_password_hash(signup_form.password.data)
+
+            user = User(username=signup_form.username.data, password=hashed_password)
+
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('index'))
+
+        return render_template("signup_site.html", form=signup_form)
+
+    #login needs to be implemented
+    @app.route("/login_site", methods=['GET', 'POST'])
+    def login_site():
         login_form = LoginForm()
         if login_form.validate_on_submit():
-            if login_form.email.data == "admin@email.com" and login_form.password.data == "12345678":
-                return render_template("success.html")
-            else:
-                return render_template("denied.html")
-        return render_template("login.html", form=login_form)
+
+            user = User.query.filter(User.username == login_form.username.data).first()
+
+            if bcrypt.check_password_hash(user.password, login_form.password.data):
+                login_user(user)
+                return redirect(url_for('index'))
+
+        return render_template("login_site.html", form=login_form)
+
+    @app.route('/logout')
+    def logout():
+        logout_user()
+        return redirect(url_for('index'))
+
+
 
     @app.route('/book_overview')
+    @login_required
     def book_overview():
         if request.method == 'GET':
             all_books = Book.query.all()
@@ -47,6 +88,7 @@ def register_routes(app, db):
 
 
     @app.route('/book_add', methods=['GET', 'POST'])
+    @login_required
     def book_add():
         book_form = BookForm()
         if request.method == 'GET':
@@ -54,9 +96,10 @@ def register_routes(app, db):
             return render_template("book_add.html", all_books=all_books, form=book_form)
         elif request.method == 'POST':
             changeBookDataOverForm(book_form=book_form, db=db)
-            return render_template('index.html')
+            return redirect(url_for('index'))
 
     @app.route('/book_details/<nummer>')
+    @login_required
     def book_details(nummer):
         book = Book.query.filter(Book.nummer == nummer).first()
         book_form = BookForm(obj=book)
@@ -64,10 +107,11 @@ def register_routes(app, db):
             return render_template('book_details.html', book=book, form=book_form)
         elif request.method == 'POST':
             changeBookDataOverForm(book_form=book_form, db=db)
-            return render_template('index.html')
+            return redirect(url_for('index'))
 
     @app.route('/book_delete/<nummer>', methods=['DELETE'])
+    @login_required
     def book_delete(nummer):
         Book.query.filter(Book.nummer == nummer).delete()
         db.session.commit()
-        return render_template('index.html')
+        return redirect(url_for('index'))

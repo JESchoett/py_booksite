@@ -2,11 +2,11 @@ import csv
 import sqlite3
 
 # Connect to SQLite database
-conn = sqlite3.connect(input('database path?: '))
+conn = sqlite3.connect('../instance/buchsammlung.db')
 cursor = conn.cursor()
-csv = input('csv path?: ')
+#csv = input('csv path?: ')
 
-with open(csv) as csvfile:
+with open('./buecher.csv') as csvfile:
     reader = csv.DictReader(csvfile, delimiter=';')
     for row in reader:
         if row['Preis'].isspace() or row['Preis'] == "":

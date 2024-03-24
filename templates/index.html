@@ -4,11 +4,10 @@
 <!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
 	<div class="container">
-		<h1>Welcome</h1>
-		<p>Are you ready to discover my secret?</p>
+		<h1>Welcome {{ user }}</h1>
+		<p>Private Bücherreiseite</p>
 	</div>
 	<div class="container">
-		<a class="btn btn-primary btn-lg" href=" {{ url_for('login') }} ">Login</a>
 		<a class="btn btn-primary btn-lg" href=" {{ url_for('book_overview') }} ">Buch Übersicht</a>
 		<a class="btn btn-primary btn-lg" href=" {{ url_for('book_add') }} ">Buch Anlegen</a>
 	</div>

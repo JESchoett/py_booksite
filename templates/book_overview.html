@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Bücher Übersicht{% endblock %}
+{% from 'bootstrap/form.html' import render_form %}
 {% block content %}
-<!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
     <div class="container">
         <ul>
             {% for book in all_books %}
-            <li> {{ book['Titel'] }} </li>
+            <li> <a href=" {{ url_for('book_details', nummer=book['nummer']) }} ">{{ book['titel'] }}</a></li>
             {% endfor %}
         </ul>
     </div>

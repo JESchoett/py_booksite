@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Bücher Übersicht{% endblock %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1>Buch Details</h1>
+        {{ render_form(form) }}
+    </div>
+    <button onclick="deleteBook({{ book['nummer'] }})"><a href=" {{ url_for('index') }} ">Löschen</a></button>
+</div>
+
+<script type="text/javascript">
+    function deleteBook(nr) {
+        fetch('{{ url_for("book_delete", nummer=nr) }}' + nr, {
+            method: 'DELETE'
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error when deleting: ', nummer);
+            }
+        }).catch(error => {
+            console.error('Error during fetching: ', error)
+        })
+    }
+</script>
+
+{% endblock %}

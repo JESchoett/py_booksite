@@ -9,7 +9,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     role = db.Column(db.String)
-    discription = db.Column(db.String)
 
     def __repr__(self):
         return f'<User: {self.username}, Role: {self.role}>'
@@ -17,8 +16,8 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.uid
 
-class Film(db.Model):
-    __tablename__ = 'filme'
+class Movies(db.Model):
+    __tablename__ = 'movies'
 
     nummer = db.Column(db.Integer, primary_key=True, autoincrement=True)
     autor = db.Column(db.Text(100), nullable=False)

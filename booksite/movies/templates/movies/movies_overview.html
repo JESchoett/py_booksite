@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Film Übersicht{% endblock %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <ul>
+            {% for movie in all_movies %}
+            <li> {{ movie['titel'] }} </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -11,7 +11,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 
-import datetime
+from flask_wtf.csrf import CSRFProtect
+
 #zum Aufruf der .env Datei
 import os
 from dotenv import load_dotenv
@@ -20,11 +21,14 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__, template_folder='templates')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./buchsammlung.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/jes/jes-share/Daten/Junk_Code/Python/py_booksite/instance/buchsammlung.db'
 
     #get the Sekret key from a .env file
     load_dotenv()
     app.secret_key = os.getenv('APP_SECRET_KEY')
+
+    #test for csrf
+    app.config['CSRF_SECRET_KEY'] = 'test for csrf'
 
     #init the Database to use it in the app
     db.init_app(app)
@@ -35,23 +39,30 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
 
-    from models import User
+    from booksite.user_handeling.models import User
     @login_manager.user_loader
     def load_user(uid):
         return User.query.get(uid)
 
     @login_manager.unauthorized_handler
     def unauthorize_callback():
-        return redirect(url_for('index'))
+        return redirect(url_for('core.index'))
 
+    csrf = CSRFProtect(app)
     bcrypt = Bcrypt(app)
 
-    #register the routes
-    from routes import register_routes
-    register_routes(app=app, db=db, bcrypt= bcrypt)
+    # import and register blueprints
+    from booksite.core.routes import core
+    from booksite.books.routes import books
+    from booksite.movies.routes import movies
+    from booksite.user_handeling.routes import user_handeling
+
+    app.register_blueprint(core, url_prefix='/')
+    app.register_blueprint(books, url_prefix='/books')
+    app.register_blueprint(movies, url_prefix='/movies')
+    app.register_blueprint(user_handeling, url_prefix='/user_handeling', bcrypt=bcrypt)
 
     migrate = Migrate(app, db)
-
     return app
 
 

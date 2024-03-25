@@ -15,10 +15,10 @@
 
 <body>
     <div>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('index') }} ">Home</a>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('login_site') }} ">Login</a>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('logout') }} ">Logout</a>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('signup_site') }} ">Signup</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('core.index') }} ">Home</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
     </div>
     {% block content %}{% endblock %}
 </body>

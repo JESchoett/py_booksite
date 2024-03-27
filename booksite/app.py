@@ -29,6 +29,7 @@ def create_app():
 
     #test for csrf
     app.config['CSRF_SECRET_KEY'] = 'test for csrf'
+    app.config['WTF_CSRF_SECRET_KEY'] = 'test for csrf'
 
     #init the Database to use it in the app
     db.init_app(app)
@@ -61,6 +62,11 @@ def create_app():
     app.register_blueprint(books, url_prefix='/books')
     app.register_blueprint(movies, url_prefix='/movies')
     app.register_blueprint(user_handeling, url_prefix='/user_handeling', bcrypt=bcrypt)
+
+    csrf.exempt(core)
+    csrf.exempt(books)
+    csrf.exempt(movies)
+    csrf.exempt(user_handeling)
 
     migrate = Migrate(app, db)
     return app

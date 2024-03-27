@@ -8,12 +8,12 @@
         <h1>Buch Details</h1>
         {{ render_form(form) }}
     </div>
-    <button onclick="deleteBook({{ book['nummer'] }})"><a href=" {{ url_for('index') }} ">Löschen</a></button>
+    <button onclick="deleteBook({{ book['nummer'] }})"><a href=" {{ url_for('core.index') }} ">Löschen</a></button>
 </div>
 
 <script type="text/javascript">
     function deleteBook(nr) {
-        fetch('{{ url_for("book_delete", nummer=nr) }}' + nr, {
+        fetch('{{ url_for("books.book_delete", nummer=nr) }}' + nr, {
             method: 'DELETE'
         }).then(response => {
             if (response.ok) {

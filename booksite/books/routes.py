@@ -36,7 +36,7 @@ def book_add():
         return render_template("books/book_add.html", all_books=all_books, form=book_form)
     elif request.method == 'POST':
         changeBookDataOverForm(book_form=book_form, db=db)
-        return redirect(url_for('core/index.html'))
+        return redirect(url_for('core.index'))
 
 @books.route('/book_details/<nummer>')
 @login_required
@@ -47,11 +47,11 @@ def book_details(nummer):
         return render_template('books/book_details.html', book=book, form=book_form)
     elif request.method == 'POST':
         changeBookDataOverForm(book_form=book_form, db=db)
-        return redirect(url_for('core/index.html'))
+        return redirect(url_for('core.index'))
 
 @books.route('/book_delete/<nummer>', methods=['DELETE'])
 @login_required
 def book_delete(nummer):
     Book.query.filter(Book.nummer == nummer).delete()
     db.session.commit()
-    return redirect(url_for('core/index.html'))
+    return redirect(url_for('core.index'))

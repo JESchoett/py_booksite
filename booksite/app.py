@@ -18,6 +18,8 @@ import os
 from dotenv import load_dotenv
 
 db = SQLAlchemy()
+bcrypt = Bcrypt()
+csrf = CSRFProtect()
 
 def create_app():
     app = Flask(__name__, template_folder='templates')
@@ -49,8 +51,8 @@ def create_app():
     def unauthorize_callback():
         return redirect(url_for('core.index'))
 
-    csrf = CSRFProtect(app)
-    bcrypt = Bcrypt(app)
+    bcrypt.init_app(app)
+    csrf.init_app(app)
 
     # import and register blueprints
     from booksite.core.routes import core

@@ -1,9 +1,14 @@
 from flask import render_template, request, redirect, url_for, Blueprint
 from flask_login import login_required
 
+from sqlalchemy import text
+
 from booksite.app import db
+
 from booksite.books.models import Book
 from booksite.books.bookForm import BookForm
+
+from booksite.user_handeling.routes import userRoll
 
 books = Blueprint('books', __name__, template_folder='templates')
 
@@ -32,7 +37,11 @@ def changeBookDataOverForm(book_form, db):
 def book_add():
     book_form = BookForm()
     if request.method == 'GET':
-        all_books = Book.query.all()
+        if userRoll == "admin":
+            all_books = Book.query.all()
+        else:
+            all_books = db.execute(text('select * from books where bemerkung != admin'))
+
         return render_template("books/book_add.html", all_books=all_books, form=book_form)
     elif request.method == 'POST':
         changeBookDataOverForm(book_form=book_form, db=db)

@@ -7,6 +7,7 @@ from booksite.user_handeling.loginForm import LoginForm
 from booksite.user_handeling.models import User
 
 user_handeling = Blueprint('user_handeling', __name__, template_folder='templates')
+userRoll = ""
 
 #login needs to be implemented
 @user_handeling.route("/signup", methods=['GET', 'POST'])
@@ -30,9 +31,11 @@ def login_site():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = User.query.filter(User.username == login_form.username.data).first()
-        if bcrypt.check_password_hash(user.password, login_form.password.data):
-            login_user(user)
-            return redirect(url_for('core.index'))
+        if user:
+            if bcrypt.check_password_hash(user.password, login_form.password.data):
+                login_user(user)
+                userRoll = user.role
+                return redirect(url_for('core.index'))
     return render_template("user_handeling/login_site.html", form=login_form)
 
 @user_handeling.route('/logout')

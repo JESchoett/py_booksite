@@ -6,7 +6,7 @@
     <div class="container">
         <ul>
             {% for book in all_books %}
-            <li> <a href=" {{ url_for('books.book_details', nummer=book['nummer']) }} ">{{ book['titel'] }}</a></li>
+            <li> <a href=" {{ url_for('books.book_details', nummer=book['nummer']) }} ">{{ book['nummer']}}: {{ book['titel'] }}</a></li>
             {% endfor %}
         </ul>
     </div>

@@ -1,13 +1,12 @@
 from flask import render_template, request, redirect, url_for, Blueprint, current_app
 from flask_login import login_user, logout_user, login_required
 
-from booksite.app import db, bcrypt
+from booksite.app import db, bcrypt, userRoll
 from booksite.user_handeling.signupForm import SignupForm
 from booksite.user_handeling.loginForm import LoginForm
 from booksite.user_handeling.models import User
 
 user_handeling = Blueprint('user_handeling', __name__, template_folder='templates')
-userRoll = ""
 
 #login needs to be implemented
 @user_handeling.route("/signup", methods=['GET', 'POST'])
@@ -21,6 +20,7 @@ def signup_site():
             return render_template("user_handeling/signup_site.html", form=signup_form, error=error)
         hashed_password = bcrypt.generate_password_hash(signup_form.password.data)
         user = User(username=signup_form.username.data, password=hashed_password)
+        user.role="user"
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('core.index'))
@@ -35,6 +35,7 @@ def login_site():
             if bcrypt.check_password_hash(user.password, login_form.password.data):
                 login_user(user)
                 userRoll = user.role
+                print(userRoll)
                 return redirect(url_for('core.index'))
     return render_template("user_handeling/login_site.html", form=login_form)
 

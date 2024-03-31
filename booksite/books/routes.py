@@ -3,12 +3,10 @@ from flask_login import login_required
 
 from sqlalchemy import text
 
-from booksite.app import db
+from booksite.app import db, userRoll
 
 from booksite.books.models import Book
 from booksite.books.bookForm import BookForm
-
-from booksite.user_handeling.routes import userRoll
 
 books = Blueprint('books', __name__, template_folder='templates')
 
@@ -16,8 +14,12 @@ books = Blueprint('books', __name__, template_folder='templates')
 @books.route('/')
 @login_required
 def index():
+    print(userRoll)
     if request.method == 'GET':
-        all_books = Book.query.all()
+        if userRoll == "admin":
+            all_books = Book.query.all()
+        else:
+            all_books = db.session.execute(text('SELECT * FROM buecher WHERE schlagw != "versteckt"'))
         return render_template("books/book_overview.html", all_books=all_books)
 
 def changeBookDataOverForm(book_form, db):
@@ -37,12 +39,7 @@ def changeBookDataOverForm(book_form, db):
 def book_add():
     book_form = BookForm()
     if request.method == 'GET':
-        if userRoll == "admin":
-            all_books = Book.query.all()
-        else:
-            all_books = db.execute(text('select * from books where bemerkung != admin'))
-
-        return render_template("books/book_add.html", all_books=all_books, form=book_form)
+        return render_template("books/book_add.html", form=book_form)
     elif request.method == 'POST':
         changeBookDataOverForm(book_form=book_form, db=db)
         return redirect(url_for('core.index'))

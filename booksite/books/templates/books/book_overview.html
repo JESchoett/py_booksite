@@ -1,14 +1,61 @@
 {% extends "base.html" %}
 {% block title %}Bücher Übersicht{% endblock %}
-{% from 'bootstrap/form.html' import render_form %}
+
 {% block content %}
 <div class="jumbotron">
-    <div class="container">
-        <ul>
-            {% for book in all_books %}
-            <li> <a href=" {{ url_for('books.book_details', nummer=book['nummer']) }} ">{{ book['nummer']}}: {{ book['titel'] }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+        <table id="bookTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titel</th>
+                    <th>Subtitel</th>
+                    <th>Autor</th>
+                    <th>Genre</th>
+                    <th>Schlagwoerter</th>
+                    <th>Verlag</th>
+                    <th>Jahr</th>
+                    <th>Format</th>
+                    <th>Standort</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in all_books %}
+                <tr>
+                    <td> <a href="{{ url_for('books.book_details', nummer=book['nummer']) }}">{{ book['nummer']}}</a></td>
+                    <td> <a href="{{ url_for('books.book_details', nummer=book['nummer']) }}">{{ book['titel'] }}</a></td>
+                    <td>{{ book['subtitel'] }}</td>
+                    <td>{{ book['autor'] }}</td>
+                    <td>{{ book['genre'] }}</td>
+                    <td>{{ book['schlagw'] }}</td>
+                    <td>{{ book['verlag'] }}</td>
+                    <td>{{ book['jahr'] }}</td>
+                    <td>{{ book['format'] }}</td>
+                    <td>{{ book['standort'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Titel</th>
+                    <th>Subtitel</th>
+                    <th>Autor</th>
+                    <th>Genre</th>
+                    <th>Schlagwoerter</th>
+                    <th>Verlag</th>
+                    <th>Jahr</th>
+                    <th>Format</th>
+                    <th>Standort</th>
+                </tr>
+            </tfoot>
+        </table>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("DataTable initialized");
+    new DataTable('#bookTable');
+});
+</script>
+
 {% endblock %}

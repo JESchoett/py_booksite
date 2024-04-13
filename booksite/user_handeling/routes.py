@@ -35,7 +35,6 @@ def login_site():
             if bcrypt.check_password_hash(user.password, login_form.password.data):
                 login_user(user)
                 userRoll = user.role
-                print(userRoll)
                 return redirect(url_for('core.index'))
     return render_template("user_handeling/login_site.html", form=login_form)
 

@@ -1,7 +1,7 @@
-from flask import render_template, request, redirect, url_for, Blueprint, current_app
+from flask import render_template, request, redirect, url_for, Blueprint, current_app, session
 from flask_login import login_user, logout_user, login_required
 
-from booksite.app import db, bcrypt, userRoll
+from booksite.app import db, bcrypt
 from booksite.user_handeling.signupForm import SignupForm
 from booksite.user_handeling.loginForm import LoginForm
 from booksite.user_handeling.models import User
@@ -33,8 +33,10 @@ def login_site():
         user = User.query.filter(User.username == login_form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.password, login_form.password.data):
+                session["userRoll"] = user.role
+                print(session["userRoll"])
+
                 login_user(user)
-                userRoll = user.role
                 return redirect(url_for('core.index'))
     return render_template("user_handeling/login_site.html", form=login_form)
 

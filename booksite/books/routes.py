@@ -1,9 +1,9 @@
-from flask import render_template, request, redirect, url_for, Blueprint
+from flask import render_template, request, redirect, url_for, Blueprint, flash, session
 from flask_login import login_required
 
 from sqlalchemy import text
 
-from booksite.app import db, userRoll
+from booksite.app import db
 
 from booksite.books.models import Book
 from booksite.books.bookForm import BookForm
@@ -14,9 +14,8 @@ books = Blueprint('books', __name__, template_folder='templates')
 @books.route('/')
 @login_required
 def index():
-    print(userRoll)
     if request.method == 'GET':
-        if userRoll == "admin":
+        if session["userRoll"] == "admin":
             all_books = Book.query.all()
         else:
             all_books = db.session.execute(text('SELECT * FROM buecher WHERE schlagw != "versteckt"'))
@@ -37,12 +36,16 @@ def changeBookDataOverForm(book_form, db):
 @books.route('/book_add', methods=['GET', 'POST'])
 @login_required
 def book_add():
-    book_form = BookForm()
-    if request.method == 'GET':
-        return render_template("books/book_add.html", form=book_form)
-    elif request.method == 'POST':
-        changeBookDataOverForm(book_form=book_form, db=db)
+    if session["userRoll"] != "admin":
+        flash("insufficient rights")
         return redirect(url_for('core.index'))
+    else:
+        book_form = BookForm()
+        if request.method == 'GET':
+            return render_template("books/book_add.html", form=book_form)
+        elif request.method == 'POST':
+            changeBookDataOverForm(book_form=book_form, db=db)
+            return redirect(url_for('core.index'))
 
 @books.route('/book_details/<nummer>', methods=['GET', 'POST'])
 @login_required

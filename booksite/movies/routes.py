@@ -1,9 +1,9 @@
-from flask import render_template, request, redirect, url_for, Blueprint
+from flask import render_template, request, redirect, url_for, Blueprint, flash, session
 from flask_login import login_required
 
 from sqlalchemy import text
 
-from booksite.app import db, userRoll
+from booksite.app import db
 
 from booksite.movies.models import Movies
 from booksite.movies.movieForm import MovieForm
@@ -14,9 +14,9 @@ movies = Blueprint('movies', __name__, template_folder='templates')
 @movies.route('/')
 @login_required
 def index():
-    print(userRoll)
+    print(session["userRoll"])
     if request.method == 'GET':
-        if userRoll == "admin":
+        if session["userRoll"] == "admin":
             all_movies = Movies.query.all()
         else:
             all_movies = db.session.execute(text('SELECT * FROM movies WHERE schlagw != "versteckt"'))
@@ -37,12 +37,17 @@ def changeMovieDataOverForm(movie_form, db):
 @movies.route('/movies_add', methods=['GET', 'POST'])
 @login_required
 def movies_add():
-    movie_form = MovieForm()
-    if request.method == 'GET':
-        return render_template("movies/movies_add.html", form=movie_form)
-    elif request.method == 'POST':
-        changeMovieDataOverForm(movie_form=movie_form, db=db)
+    print(session["userRoll"])
+    if session["userRoll"] != "admin":
+        flash("insufficient rights")
         return redirect(url_for('core.index'))
+    else:
+        movie_form = MovieForm()
+        if request.method == 'GET':
+            return render_template("movies/movies_add.html", form=movie_form)
+        elif request.method == 'POST':
+            changeMovieDataOverForm(movie_form=movie_form, db=db)
+            return redirect(url_for('core.index'))
 
 @movies.route('/movie_details/<nummer>', methods=['GET', 'POST'])
 @login_required

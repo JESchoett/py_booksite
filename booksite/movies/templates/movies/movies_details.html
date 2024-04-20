@@ -3,19 +3,18 @@
 {% from 'bootstrap/form.html' import render_form %}
 
 {% block content %}
-
 <div class="jumbotron">
     <div class="container">
         <h1>Buch Details</h1>
         {{ render_form(form) }}
     </div>
-    <button onclick="deleteBook({{ book['nummer'] }})"><a href=" {{ url_for('core.index') }} ">Löschen</a></button>
+    <button onclick="deletemovie({{ movie['nummer'] }})"><a href=" {{ url_for('core.index') }} ">Löschen</a></button>
 </div>
 
 <script type="text/javascript">
-    function deleteBook(nr) {
+    function deletemovie(nr) {
         console.log("nummer: ", nr)
-        fetch('{{ url_for("books.book_delete", nummer=nr) }}' + nr, {
+        fetch('{{ url_for("movies.movies_delete", nummer=nr) }}' + nr, {
             method: 'DELETE'
         }).then(response => {
             if (response.ok) {

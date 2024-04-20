@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block title %}Film Übersicht{% endblock %}
+{% block content %}
+<!--Using Boostrap classes for styling here-->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Neuer Film</h1>
+        {{ render_form(form) }}
+    </div>
+</div>
+{% endblock %}

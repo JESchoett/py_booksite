@@ -3,12 +3,45 @@
 {% from 'bootstrap/form.html' import render_form %}
 {% block content %}
 <div class="jumbotron">
-    <div class="container">
-        <ul>
+        <table id="movieTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titel</th>
+                    <th>Subtitel</th>
+                    <th>Autor</th>
+                    <th>Genre</th>
+                    <th>Schlagwoerter</th>
+                    <th>Verlag</th>
+                    <th>Jahr</th>
+                    <th>Format</th>
+                    <th>Standort</th>
+                </tr>
+            </thead>
+            <tbody>
             {% for movie in all_movies %}
-            <li> {{ movie['titel'] }} </li>
-            {% endfor %}
-        </ul>
-    </div>
+                <tr>
+                    <td> <a href="{{ url_for('movies.movie_details', nummer=movie['nummer']) }}">{{ movie['nummer']}}</a></td>
+                    <td> <a href="{{ url_for('movies.movie_details', nummer=movie['nummer']) }}">{{ movie['titel'] }}</a></td>
+                    <td>{{ movie['subtitel'] }}</td>
+                    <td>{{ movie['autor'] }}</td>
+                    <td>{{ movie['genre'] }}</td>
+                    <td>{{ movie['schlagw'] }}</td>
+                    <td>{{ movie['verlag'] }}</td>
+                    <td>{{ movie['jahr'] }}</td>
+                    <td>{{ movie['format'] }}</td>
+                    <td>{{ movie['standort'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("DataTable initialized");
+    new DataTable('#movieTable');
+});
+</script>
+
 {% endblock %}

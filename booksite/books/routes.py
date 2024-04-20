@@ -44,7 +44,7 @@ def book_add():
         changeBookDataOverForm(book_form=book_form, db=db)
         return redirect(url_for('core.index'))
 
-@books.route('/book_details/<nummer>')
+@books.route('/book_details/<nummer>', methods=['GET', 'POST'])
 @login_required
 def book_details(nummer):
     book = Book.query.filter(Book.nummer == nummer).first()

@@ -22,15 +22,14 @@
 </head>
 
 <body>
-    <div>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('core.index') }} ">Home</a>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
-        <a class="btn btn-primary btn-lg" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
-    </div>
-    <br>
+    <nav class="navbar navbar-dark bg-dark fixed-top bg-body-tertiary mb-8">
+        <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
+        <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
+        <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+        <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
+    </nav>
 	{% for message in get_flashed_messages() %}
-        <div class="alert alert-info alert-dismissible fade show row" role="alert">
+        <div class="alert alert-info alert-dismissible fade show mt-5" role="alert">
 	    	<div class="col-11">
                 {{ message }}
             </div>

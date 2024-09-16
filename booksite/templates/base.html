@@ -19,25 +19,33 @@
     <script defer src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
     <script defer src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
 
-</head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+</head>
 <body>
-    <nav class="navbar navbar-dark bg-dark fixed-top bg-body-tertiary mb-8">
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary mb-3">
         <a class="navbar-brand nav-text" href=" {{ url_for('core.index') }} ">Home</a>
         <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.login_site') }} ">Login</a>
         <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.logout') }} ">Logout</a>
+        <!--
         <a class="navbar-brand nav-text" href=" {{ url_for('user_handeling.signup_site') }} ">Signup</a>
+        -->
     </nav>
-	{% for message in get_flashed_messages() %}
-        <div class="alert alert-info alert-dismissible fade show mt-5" role="alert">
-	    	<div class="col-11">
+    {% for message in get_flashed_messages() %}
+    <br>
+        <div class="alert alert-info alert-dismissible fade show row" role="alert">
+            <div class="col-11">
                 {{ message }}
             </div>
             <div class="col-1">
                 <button type="button" class="btn btn-info" data-bs-dismiss="alert" aria-label="Close">Close</button>
             </div>
-	    </div>
-	{% endfor %}
+        </div>
+    {% endfor %}
+    <br>
     {% block content %}{% endblock %}
 </body>
 </html>

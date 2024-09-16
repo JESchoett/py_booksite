@@ -18,7 +18,8 @@ def index():
         if session["userRoll"] == "admin":
             all_books = Book.query.all()
         else:
-            all_books = db.session.execute(text('SELECT * FROM buecher WHERE schlagw != "versteckt"'))
+            #all_books = db.session.execute(text('SELECT * FROM buecher WHERE schlagw != "versteckt"'))
+            all_books = Book.query.filter(Book.schlagw != "versteckt").all()
         return render_template("books/book_overview.html", all_books=all_books)
 
 def changeBookDataOverForm(book_form, db):

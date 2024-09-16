@@ -1,0 +1,31 @@
+.dataTables_filter {
+    float: left !important;
+}
+
+
+.component {
+    background-color: lightgray;
+}
+
+body {
+    margin: 4%;
+    background-color: white;
+}
+
+nav {
+    background-color: #05772b;
+}
+
+.nav-text {
+    color: #f0efeb;
+    font-weight: bolder;
+}
+
+.btn-primary {
+    background-color: #091581;
+}
+.btn-gruppe {
+    color: #f0efeb;
+    border-radius: 10em;
+    border-width: 0.2em;
+}

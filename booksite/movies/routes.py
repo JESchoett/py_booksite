@@ -19,7 +19,7 @@ def index():
         if session["userRoll"] == "admin":
             all_movies = Movies.query.all()
         else:
-            all_movies = db.session.execute(text('SELECT * FROM movies WHERE schlagw != "versteckt"'))
+            all_movies = Movies.query.filter(Movies.schlagw != "versteckt").all()
         return render_template("movies/movies_overview.html", all_movies=all_movies)
 
 def changeMovieDataOverForm(movie_form, db):

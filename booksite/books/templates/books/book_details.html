@@ -7,26 +7,191 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Buch Details</h1>
-        {{ render_form(form) }}
+
+        <!-- Start of the form -->
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="autor" class="col-md-4">{{ form.autor.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.autor(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="titel" class="col-md-4">{{ form.titel.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.titel(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="genre" class="col-md-4">{{ form.genre.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.genre(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="subgenreRomane" class="col-md-4">{{ form.subgenreRomane.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.subgenreRomane(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="format" class="col-md-4">{{ form.format.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.format(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="verlag" class="col-md-4">{{ form.verlag.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.verlag(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="laenge" class="col-md-4">{{ form.laenge.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.laenge(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="seiten" class="col-md-4">{{ form.seiten.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.seiten(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="isbn" class="col-md-4">{{ form.isbn.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.isbn(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="jahr" class="col-md-4">{{ form.jahr.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.jahr(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="preis" class="col-md-4">{{ form.preis.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.preis(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="standort" class="col-md-4">{{ form.standort.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.standort(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="bemerkungen" class="col-md-4">{{ form.bemerkungen.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.bemerkungen(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="subtitel" class="col-md-4">{{ form.subtitel.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.subtitel(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="subgenreSachbuchRatgeber" class="col-md-4">{{ form.subgenreSachbuchRatgeber.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.subgenreSachbuchRatgeber(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="subgenreRatgeber" class="col-md-4">{{ form.subgenreRatgeber.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.subgenreRatgeber(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="auflage" class="col-md-4">{{ form.auflage.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.auflage(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="schlagw" class="col-md-4">{{ form.schlagw.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.schlagw(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="bild" class="col-md-4">{{ form.bild.label(class="form-label") }}</label>
+                    <div class="col-md-8">
+                        {{ form.bild(class="form-control") }}
+                    </div>
+                </div>
+
+                <!-- Inhaltsangabe with correct text wrapping -->
+                <div class="col-md-12 d-flex align-items-start mb-3">
+                    <label for="inhaltsangabe" class="col-md-2">{{ form.inhaltsangabe.label(class="form-label") }}</label>
+                    <div class="col-md-10">
+                        <!-- Manually added textarea with wrapping and custom height -->
+                        <textarea class="form-control" name="inhaltsangabe" id="inhaltsangabe" rows="5" style="height: 150px;" wrap="soft">{{ form.inhaltsangabe.data }}</textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="form-group col-6">
+                        {{ form.submit(class="btn btn-primary btn-block submit-button") }}
+                    </div>
+                    <!-- Delete button -->
+                    <div class="form-group col-6">
+                        <button class="btn btn-danger btn-block" onclick="deleteBook({{ book['nummer'] }})">
+                            Löschen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
     </div>
-    <button onclick="deleteBook({{ book['nummer'] }})"><a href=" {{ url_for('core.index') }} ">Löschen</a></button>
 </div>
 
+<!-- Delete functionality -->
 <script type="text/javascript">
     function deleteBook(nr) {
-        console.log("nummer: ", nr)
-        fetch('{{ url_for("books.book_delete", nummer=nr) }}' + nr, {
+        console.log("Book delete: ", nr);
+        fetch('{{ url_for("books.book_delete", nummer="") }}' + nr, {
             method: 'DELETE'
         }).then(response => {
-            if (response.ok) {
-                window.location.reload();
+            return response.json().then(data => ({status: response.status, body: data}));
+        }).then(({status, body}) => {
+            if (status === 200) {
+                alert(body.message);  // Show success message
+                window.location.href = "{{ url_for('core.index') }}";  // Redirect after deletion
             } else {
-                console.error('Error when deleting: ', nummer);
+                alert(body.error);  // Show error message
             }
         }).catch(error => {
-            console.error('Error during fetching: ', error)
-        })
+            console.error('Error during fetching: ', error);
+        });
     }
+
 </script>
 
 {% endblock %}

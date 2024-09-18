@@ -29,3 +29,7 @@ nav {
     border-radius: 10em;
     border-width: 0.2em;
 }
+
+.submit-button:hover {
+    text-decoration: underline;
+}

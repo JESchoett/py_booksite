@@ -22,7 +22,8 @@ def index():
             all_books = Book.query.filter(Book.schlagw != "versteckt").all()
         return render_template("books/book_overview.html", all_books=all_books)
 
-def changeBookDataOverForm(book_form, db):
+def addBookOverForm(book_form, db):
+    # adding a new Book to the DB
     book = Book(autor=book_form.autor.data, titel=book_form.titel.data, genre=book_form.genre.data,
         subgenreRomane=book_form.subgenreRomane.data, format=book_form.format.data,
         verlag=book_form.verlag.data, laenge=book_form.laenge.data, isbn=book_form.isbn.data,
@@ -33,6 +34,30 @@ def changeBookDataOverForm(book_form, db):
         schlagw=book_form.schlagw.data, bild=book_form.bild.data)
     db.session.add(book)
     db.session.commit()
+
+def alterBookOverForm(book, book_form, db):
+    # Update the book fields with the form
+    book.autor = book_form.autor.data
+    book.titel = book_form.titel.data
+    book.genre = book_form.genre.data
+    book.subgenreRomane = book_form.subgenreRomane.data
+    book.format = book_form.format.data
+    book.verlag = book_form.verlag.data
+    book.laenge = book_form.laenge.data
+    book.isbn = book_form.isbn.data
+    book.jahr = book_form.jahr.data
+    book.preis = book_form.preis.data
+    book.standort = book_form.standort.data
+    book.inhaltsangabe = book_form.inhaltsangabe.data
+    book.bemerkungen = book_form.bemerkungen.data
+    book.subtitel = book_form.subtitel.data
+    book.subgenreSachbuchRatgeber = book_form.subgenreSachbuchRatgeber.data
+    book.subgenreRatgeber = book_form.subgenreRatgeber.data
+    book.auflage = book_form.auflage.data
+    book.schlagw = book_form.schlagw.data
+    book.bild = book_form.bild.data
+    db.session.commit()
+
 
 @books.route('/book_add', methods=['GET', 'POST'])
 @login_required
@@ -45,7 +70,7 @@ def book_add():
         if request.method == 'GET':
             return render_template("books/book_add.html", form=book_form)
         elif request.method == 'POST':
-            changeBookDataOverForm(book_form=book_form, db=db)
+            addBookOverForm(book_form=book_form, db=db)
             return redirect(url_for('core.index'))
 
 @books.route('/book_details/<nummer>', methods=['GET', 'POST'])
@@ -56,12 +81,15 @@ def book_details(nummer):
     if request.method == 'GET':
         return render_template('books/book_details.html', book=book, form=book_form)
     elif request.method == 'POST':
-        changeBookDataOverForm(book_form=book_form, db=db)
+        alterBookOverForm(book=book, book_form=book_form, db=db)
         return redirect(url_for('core.index'))
 
 @books.route('/book_delete/<nummer>', methods=['DELETE'])
 @login_required
 def book_delete(nummer):
-    Book.query.filter(Book.nummer == nummer).delete()
-    db.session.commit()
-    return redirect(url_for('core.index'))
+    book = Book.query.filter(Book.nummer == nummer).first()
+    if book:
+        db.session.delete(book)
+        db.session.commit()
+        return {f"Book nr. {nummer} deleted."}, 200
+    return {f"ERROR: Book nr. {nummer} waas not deleted."}, 404

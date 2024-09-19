@@ -21,14 +21,18 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 csrf = CSRFProtect()
 
-def create_app():
+def create_app(config_name="development"):
     app = Flask(__name__, template_folder='templates')
 
-    #current_dir = os.path.dirname(os.path.abspath('buchsammlung.db'))
-    #database_file = os.path.join(current_dir, 'instance', 'buchsammlung.db')
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + database_file
+    # General config
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///buchsammlung.db'# + database_file
+    if config_name == "development":
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///buchsammlung.db'
+        app.config['DEBUG'] = True
+    elif config_name == "testing":
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
+        app.config['TESTING'] = True
 
     #get the Sekret key from a .env file
     load_dotenv()

@@ -1,15 +1,12 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash, session
 from flask_login import login_required
 
-from sqlalchemy import text
-
 from booksite.app import db
 
 from booksite.books.models import Book
 from booksite.books.bookForm import BookForm
 
 books = Blueprint('books', __name__, template_folder='templates')
-
 
 @books.route('/')
 @login_required
@@ -24,14 +21,25 @@ def index():
 
 def addBookOverForm(book_form, db):
     # adding a new Book to the DB
-    book = Book(autor=book_form.autor.data, titel=book_form.titel.data, genre=book_form.genre.data,
-        subgenreRomane=book_form.subgenreRomane.data, format=book_form.format.data,
-        verlag=book_form.verlag.data, laenge=book_form.laenge.data, isbn=book_form.isbn.data,
-        jahr=book_form.jahr.data, preis=book_form.preis.data, standort=book_form.standort.data,
-        inhaltsangabe=book_form.inhaltsangabe.data, bemerkungen=book_form.bemerkungen.data,
-        subtitel=book_form.subtitel.data, subgenreSachbuchRatgeber=book_form.subgenreSachbuchRatgeber.data,
-        subgenreRatgeber=book_form.subgenreRatgeber.data, auflage=book_form.auflage.data,
-        schlagw=book_form.schlagw.data, bild=book_form.bild.data)
+    book = Book(autor=book_form.autor.data,
+                titel=book_form.titel.data,
+                genre=book_form.genre.data,
+                subgenreRomane=book_form.subgenreRomane.data,
+                format=book_form.format.data,
+                verlag=book_form.verlag.data,
+                laenge=book_form.laenge.data,
+                isbn=book_form.isbn.data,
+                jahr=book_form.jahr.data,
+                preis=book_form.preis.data,
+                standort=book_form.standort.data,
+                inhaltsangabe=book_form.inhaltsangabe.data,
+                bemerkungen=book_form.bemerkungen.data,
+                subtitel=book_form.subtitel.data,
+                subgenreSachbuchRatgeber=book_form.subgenreSachbuchRatgeber.data,
+                subgenreRatgeber=book_form.subgenreRatgeber.data,
+                auflage=book_form.auflage.data,
+                schlagw=book_form.schlagw.data,
+                bild=book_form.bild.data)
     db.session.add(book)
     db.session.commit()
 
@@ -58,7 +66,6 @@ def alterBookOverForm(book, book_form, db):
     book.bild = book_form.bild.data
     db.session.commit()
 
-
 @books.route('/book_add', methods=['GET', 'POST'])
 @login_required
 def book_add():
@@ -71,7 +78,8 @@ def book_add():
             return render_template("books/book_add.html", form=book_form)
         elif request.method == 'POST':
             addBookOverForm(book_form=book_form, db=db)
-            return redirect(url_for('core.index'))
+            return  redirect(url_for('core.index'))
+        return {f"ERROR: Book nr. {book_form.nummer} was not addet."}
 
 @books.route('/book_details/<nummer>', methods=['GET', 'POST'])
 @login_required
@@ -81,7 +89,8 @@ def book_details(nummer):
     if request.method == 'GET':
         return render_template('books/book_details.html', book=book, form=book_form)
     elif request.method == 'POST':
-        alterBookOverForm(book=book, book_form=book_form, db=db)
+        if book:
+            alterBookOverForm(book=book, book_form=book_form, db=db)
         return redirect(url_for('core.index'))
 
 @books.route('/book_delete/<nummer>', methods=['DELETE'])
@@ -92,4 +101,4 @@ def book_delete(nummer):
         db.session.delete(book)
         db.session.commit()
         return {f"Book nr. {nummer} deleted."}, 200
-    return {f"ERROR: Book nr. {nummer} waas not deleted."}, 404
+    return {f"ERROR: Book nr. {nummer} was not deleted."}, 404

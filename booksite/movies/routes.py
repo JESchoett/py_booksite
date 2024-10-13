@@ -79,8 +79,9 @@ def movie_details(nummer):
     if request.method == 'GET':
         return render_template('movies/movies_details.html', movie=movie, form=movie_form)
     elif request.method == 'POST':
-        alterMovieOverForm(movie=movie, movie_form=movie_form, db=db)
-        return redirect(url_for('core.index'))
+        if movie:
+            alterMovieOverForm(movie=movie, movie_form=movie_form, db=db)
+            return redirect(url_for('core.index'))
 
 @movies.route('/movies_delete/<nummer>', methods=['DELETE'])
 @login_required

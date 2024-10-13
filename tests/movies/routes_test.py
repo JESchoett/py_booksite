@@ -1,33 +1,71 @@
 import unittest
+
 from booksite.app import create_app, db
 from booksite.movies.models import Movies
+from booksite.movies.routes import movies_delete
+from booksite.user_handeling.models import User
+
+from flask import session
+from flask_login import login_user
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
+
+def movie_testdata():
+    movie = Movies(autor="autor.data",
+        titel="titel.data",
+        genre="genre.data",
+        subgenreRomane="subgenreRomane.data",
+        format="format.data",
+        verlag="verlag.data",
+        laenge="",
+        isbn=9783861087212,
+        jahr=2000,
+        preis=0.0,
+        standort="1_1_1",
+        inhaltsangabe="inhaltsangabe.data",
+        bemerkungen="bemerkungen.data",
+        subtitel="subtitel.data",
+        subgenreSachbuchRatgeber="subgenreSachbuchRatgeber.data",
+        subgenreRatgeber="subgenreRatgeber.data",
+        auflage="auflage.data",
+        schlagw="schlagw.data",
+        bild="bild.data"
+    )
+    return movie
 
 class MovieTestCase(unittest.TestCase):
-    def setUp(self):
-        self.app = create_app('testing')
-        self.client = self.app.test_client()
-        self.app_context = self.app.app_context()
-        self.app_context.push()
-        db.create_all()
+    @classmethod
+    def setUpClass(cls):
+        cls.app = create_app(config_name='testing')
+        cls.client = cls.app.test_client()
+        cls.app_context = cls.app.app_context()
+        cls.app_context.push()
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls):
         db.session.remove()
-        db.drop_all()
-        self.app_context.pop()
+        cls.app_context.pop()
 
-    def test_movie_deletion(self):
-        # Add a test movie
-        movie = Movies(autor="Author", titel="Test Movie", nummer=123)
+    def test_delete_book(self):
+        movie = movie_testdata()
         db.session.add(movie)
         db.session.commit()
 
-        # Now delete the movie via the API
-        response = self.client.delete(f'/movies_delete/{movie.nummer}')
-        self.assertEqual(response.status_code, 200)
+        # Simulate user login
+        with self.client:
+            response = self.client.post('/login', data=dict(
+                username="admin_test",
+                password="admin123",
+                role = "admin"
+            ))
+            session["userRoll"] = "admin"
+            login_user(User.query.filter_by(username="admin").first())
 
-        # Check that the movie is no longer in the database
-        deleted_movie = Movies.query.filter_by(nummer=123).first()
-        self.assertIsNone(deleted_movie)
+            response = movies_delete(movie.nummer)
+            self.assertEqual(response[1], 200)
+            deleted_movie = Movies.query.filter_by(nummer=movie.nummer).first()
+            self.assertIsNone(deleted_movie)
 
 if __name__ == '__main__':
     unittest.main()

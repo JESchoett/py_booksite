@@ -1,12 +1,179 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
-{% block title %}Bücher Übersicht{% endblock %}
+{% block title %}Bücher Anlegen{% endblock %}
 {% block content %}
-<!--Using Boostrap classes for styling here-->
 <div class="jumbotron">
     <div class="container">
-        <h1>Neues Buch</h1>
-        {{ render_form(form) }}
+        <form method="POST" action="/add_book">
+            <!-- ISBN Field with Search Button -->
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="isbn" class="col-md-4">ISBN</label>
+                    <div class="col-md-8 input-group">
+                        <input type="text" class="form-control" id="isbn" name="isbn">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="fetchBookData">🔎</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fields from book_details.html -->
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="autor" class="col-md-4">Autor</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="autor" name="autor">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="titel" class="col-md-4">Titel</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="titel" name="titel">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="genre" class="col-md-4">Genre</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="genre" name="genre">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="subgenreRomane" class="col-md-4">Subgenre Romane</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="subgenreRomane" name="subgenreRomane">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="format" class="col-md-4">Format</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="format" name="format">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="verlag" class="col-md-4">Verlag</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="verlag" name="verlag">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="laenge" class="col-md-4">Länge</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="laenge" name="laenge">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="seiten" class="col-md-4">Seiten</label>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" id="seiten" name="seiten">
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="preis" class="col-md-4">Preis</label>
+                    <div class="col-md-8">
+                        <input type="number" step="0.01" class="form-control" id="preis" name="preis">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="row mt-3">
+                <div class="form-group col-6">
+                    <button type="submit" class="btn btn-primary btn-block">Buch Hinzufügen</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
+
+<!-- Modal for Preview and Confirmation -->
+<div class="modal fade" id="bookPreviewModal" tabindex="-1" role="dialog" aria-labelledby="bookPreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookPreviewModalLabel">Buchdaten überprüfen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="previewForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewTitel">Titel</label>
+                            <input type="text" class="form-control" id="previewTitel">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewAutor">Autor</label>
+                            <input type="text" class="form-control" id="previewAutor">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewGenre">Genre</label>
+                            <input type="text" class="form-control" id="previewGenre">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewVerlag">Verlag</label>
+                            <input type="text" class="form-control" id="previewVerlag">
+                        </div>
+                    </div>
+                    <!-- Add other fields as needed -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Verwerfen</button>
+                <button type="button" class="btn btn-primary" id="confirmBookData">Bestätigen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('fetchBookData').addEventListener('click', function() {
+        const isbn = document.getElementById('isbn').value;
+        if (isbn) {
+            fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.totalItems > 0) {
+                        const book = data.items[0].volumeInfo;
+
+                        // Populate preview fields
+                        document.getElementById('previewTitel').value = book.title || '';
+                        document.getElementById('previewAutor').value = book.authors ? book.authors.join(', ') : '';
+                        document.getElementById('previewGenre').value = book.categories ? book.categories.join(', ') : '';
+                        document.getElementById('previewVerlag').value = book.publisher || '';
+
+                        // Show modal
+                        $('#bookPreviewModal').modal('show');
+                    } else {
+                        alert('No book found with this ISBN');
+                    }
+                })
+                .catch(error => console.error('Error fetching book data:', error));
+        } else {
+            alert('Please enter an ISBN');
+        }
+    });
+
+    document.getElementById('confirmBookData').addEventListener('click', function() {
+        // Copy data from preview modal to form
+        document.getElementById('titel').value = document.getElementById('previewTitel').value;
+        document.getElementById('autor').value = document.getElementById('previewAutor').value;
+        document.getElementById('genre').value = document.getElementById('previewGenre').value;
+        document.getElementById('verlag').value = document.getElementById('previewVerlag').value;
+
+        // Hide modal
+        $('#bookPreviewModal').modal('hide');
+    });
+</script>
 {% endblock %}

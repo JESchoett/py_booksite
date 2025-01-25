@@ -66,6 +66,8 @@ def get_data():
         #clean up book_data keys
         book_data['Einband'] = book_data.pop('Einband - flex.(Paperback)')
         book_data['Erscheinungsdatum'] = book_data.pop('erschienen am')
+        book_data["Preis"] = book_data["Preis"].replace("*", "").replace(" ", "")
+        book_data["ISBN-13"] = book_data["ISBN-13"].replace("", "")
 
         try:
             ## Extracting the description of the book

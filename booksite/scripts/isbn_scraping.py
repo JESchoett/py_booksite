@@ -81,7 +81,9 @@ def get_data():
         #clean up book_data keys
         book_data["Erscheinungsdatum"] = book_data["erschienen am"]
         book_data["Preis"] = book_data["Preis"].replace("*", "").replace(" ", "")
-        book_data["ISBN-13"] = book_data["ISBN-13"].replace("", "")
+        book_data["ISBN-13"] = book_data["ISBN-13"].replace(" ", "")
+        book_data["Jahr"] = book_data["Auflage"][-4:]
+        book_data["Auflage"] = book_data["Auflage"][:-4]
 
         try:
             ## Extracting the description of the book
@@ -117,14 +119,12 @@ def get_ISBN_data(ISBN):
     driver.quit()
     return(book_data)
 
-book_data = get_ISBN_data("978-3-608-98701-0")
-print(book_data)
-
-#visual test of get_ISBN_data
-for key, value in book_data.items():
-    print(f"{key}: {value}")
-
-
+#book_data = get_ISBN_data("978-3-608-98701-0")
+#print(book_data)
+#
+##visual test of get_ISBN_data
+#for key, value in book_data.items():
+#    print(f"{key}: {value}")
 
 #Title: Der Herr der Ringe
 #In der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht

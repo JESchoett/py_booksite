@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, FloatField
+from wtforms import StringField, SubmitField, IntegerField, FloatField, DateField
 from wtforms.validators import DataRequired
 
 class BookForm(FlaskForm):
@@ -23,4 +23,5 @@ class BookForm(FlaskForm):
     auflage = IntegerField(label='Auflage')
     schlagw = StringField(label='Schlagw')
     bild = StringField(label='Bild')
+    edatum = DateField(label='Erscheinungsdatum',format='%d-%m-%Y')
     submit = SubmitField(label='Submit')

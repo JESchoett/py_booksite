@@ -23,7 +23,6 @@ class Book(db.Model):
     auflage = db.Column(db.Integer)
     schlagw = db.Column(db.Text(100))
     bild = db.Column(db.Text(250))
-    edatum = db.Column(db.Date)
 
     seiten = db.Column(db.Integer)
 

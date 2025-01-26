@@ -23,7 +23,6 @@ class Movies(db.Model):
     auflage = db.Column(db.Integer)
     schlagw = db.Column(db.Text(100))
     bild = db.Column(db.Text(250))
-    edatum = db.Column(db.Date)
 
     def __repr__(self):
         return self

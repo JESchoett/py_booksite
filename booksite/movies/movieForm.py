@@ -22,5 +22,4 @@ class MovieForm(FlaskForm):
     auflage = IntegerField(label='Auflage')
     schlagw = StringField(label='Schlagw')
     bild = StringField(label='Bild')
-    edatum = DateField(label='Erscheinungsdatum',format='%d-%m-%Y')
     submit = SubmitField(label='Submit')

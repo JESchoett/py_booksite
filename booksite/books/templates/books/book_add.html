@@ -4,7 +4,8 @@
 {% block content %}
 <div class="jumbotron">
     <div class="container">
-        <form method="POST" action="/add_book">
+        <form method="POST" action="{{ url_for('books.book_add') }}">
+            {{ form.hidden_tag() }}
             <!-- ISBN Field with Search Button -->
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -23,25 +24,20 @@
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="titel" class="col-md-4">Titel</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="titel" name="titel">
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="autor" class="col-md-4">Autor</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="autor" name="autor">
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="edatum" class="col-md-4">Erscheinungsdatum</label>
-                    <div class="col-md-8">
-                        <input type="date" class="form-control" id="edatum" name="edatum">
+                        <textarea class="form-control" id="titel" name="titel" rows="5"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="bild" class="col-md-4">Bild</label>
                     <div class="col-md-8">
                         <input type="text" class="form-control" id="bild" name="bild">
+                        <img id="bildImg" src="" alt="Book Image" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="autor" class="col-md-4">Autor</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="autor" name="autor">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -69,15 +65,9 @@
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="seiten" class="col-md-4">Seiten</label>
-                    <div class="col-md-8">
-                        <input type="number" class="form-control" id="seiten" name="seiten">
-                    </div>
-                </div>
-                <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="preis" class="col-md-4">Preis</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="preis" name="preis">
+                        <input type="number" class="form-control" id="preis" name="preis" step="0.01">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -151,6 +141,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="bookPreviewModalLabel">Buchdaten überprüfen</h5>
+                <button type="button" class="ml-2 btn btn-primary" id="confirmBookData">Bestätigen</button>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -158,9 +149,14 @@
             <div class="modal-body">
                 <form id="previewForm">
                     <div class="row">
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="previewTitel">Titel</label>
                             <textarea class="form-control" id="previewTitel" rows="5"></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewBildText">Bild</label>
+                            <input type="text" class="form-control" id="previewBildText">
+                            <img id="previewBildImg" src="" alt="Book Image" class="img-fluid">
                         </div>
                     </div>
                     <div class="row">
@@ -196,7 +192,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="previewPreis">Preis</label>
-                            <input type="text" class="form-control" id="previewPreis">
+                            <input type="number" class="form-control" id="previewPreis" name="previewPreis" step="0.01">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="previewJahr">Jahr</label>
@@ -228,7 +224,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Verwerfen</button>
                 <button type="button" class="btn btn-primary" id="confirmBookData">Bestätigen</button>
             </div>
         </div>
@@ -267,6 +262,12 @@
                     document.getElementById('previewAuflage').value = data.Auflage || '';
                     document.getElementById('previewJahr').value = data.Jahr || '';
 
+                    document.getElementById('previewBildText').value = data.Bild || '';
+                    // Set image source and log it
+                    const previewBildImg = document.getElementById('previewBildImg');
+                    previewBildImg.src = "{{ url_for('static', filename='tempCover.png') }}";
+
+                    // making the url clickable
                     const previewUrl = document.getElementById('previewUrl');
                     previewUrl.innerText = data.Url || '';
                     previewUrl.href = data.Url || '#';
@@ -299,6 +300,9 @@
         document.getElementById('laenge').value = document.getElementById('previewLaenge').value;
         document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
         document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
+
+        document.getElementById('bildImg').src = document.getElementById('previewBildImg').src;
+        document.getElementById('bild').value = document.getElementById('previewBildText').value;
 
         // Hide modal
         $('#bookPreviewModal').modal('hide');

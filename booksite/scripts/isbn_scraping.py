@@ -11,6 +11,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from bs4 import BeautifulSoup
 
+import urllib.request
+
 ### these options are relevant to run selenium on a remote server
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
@@ -106,6 +108,15 @@ def get_data():
         except Exception as e:
             print("Error extracting title:", e)
 
+        try:
+            img = driver.find_element(By.ID, "ISBNcover")
+            # get the image source
+            #img.screenshot('booksite/scripts/tempCover.png')
+            src = img.get_attribute('src')
+            urllib.request.urlretrieve(src, "booksite/scripts/tempCover.png")
+
+        except Exception as e:
+            print("Error extracting img:", e)
 
     except Exception as e:
         print("Error:", e)

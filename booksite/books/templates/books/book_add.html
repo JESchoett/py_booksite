@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
 {% block title %}Bücher Anlegen{% endblock %}
+
 {% block content %}
+{% include 'books/book_breadcrumb.html' %}
+
 <div class="jumbotron">
     <div class="container">
         <form method="POST" action="{{ url_for('books.book_add') }}">

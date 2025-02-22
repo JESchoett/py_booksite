@@ -151,13 +151,14 @@ def get_ISBN_data(ISBN):
     driver.quit()
     return(book_data)
 
+#Testdata:
 #book_data = get_ISBN_data("978-3-608-98701-0")
 #print(book_data)
 #
 ##visual test of get_ISBN_data
 #for key, value in book_data.items():
 #    print(f"{key}: {value}")
-
+#
 #Title: Der Herr der Ringe
 #In der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht
 #von J.R.R. Tolkien, aus dem Englischen übersetzt von Wolfgang Krege Der Herr der Ringe In der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht

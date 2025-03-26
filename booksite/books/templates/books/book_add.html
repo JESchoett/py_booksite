@@ -227,14 +227,35 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="confirmBookData">Bestätigen</button>
+                <button type="button" class="ml-2 btn btn-primary" id="confirmBookDataFooter">Bestätigen</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    function initializePreviewElements() {
+        document.getElementById('previewTitel').value = '';
+        document.getElementById('previewAutor').value = '';
+        document.getElementById('previewGenre').value = '';
+        document.getElementById('previewVerlag').value = '';
+        document.getElementById('previewISBN10').value = '';
+        document.getElementById('previewISBN13').value = '';
+        document.getElementById('previewPreis').value = '';
+        document.getElementById('previewFormat').value = '';
+        document.getElementById('previewLaenge').value = '';
+        document.getElementById('previewInhaltsangabe').value = '';
+        document.getElementById('previewAuflage').value = '';
+        document.getElementById('previewJahr').value = '';
+        document.getElementById('previewBildText').value = '';
+        document.getElementById('previewBildImg').src = '';
+        document.getElementById('previewUrl').innerText = '';
+        document.getElementById('previewUrl').href = '#';
+    }
+
     document.getElementById('fetchBookData').addEventListener('click', function() {
+        initializePreviewElements();
+
         const isbn = document.getElementById('isbn').value;
         console.log('Fetching book data for ISBN:', isbn);
         if (isbn) {
@@ -263,7 +284,7 @@
                     document.getElementById('previewLaenge').value = data['Laenge'] || '';
                     document.getElementById('previewInhaltsangabe').value = data['Beschreibung'] || '';
                     document.getElementById('previewAuflage').value = data.Auflage || '';
-                    document.getElementById('previewJahr').value = data.Jahr || '';
+                    document.getElementById('previewJahr').value = data['Jahr'] || '';
 
                     document.getElementById('previewBildText').value = data.Bild || '';
                     // Set image source and log it
@@ -284,31 +305,39 @@
             });
         }
     });
+    document.querySelectorAll('#confirmBookData, #confirmBookDataFooter').forEach(button => {
+        button.addEventListener('click', function() {
+            // Copy data from preview modal to form
+            document.getElementById('titel').value = document.getElementById('previewTitel').value;
+            document.getElementById('autor').value = document.getElementById('previewAutor').value;
+            document.getElementById('genre').value = document.getElementById('previewGenre').value;
+            document.getElementById('verlag').value = document.getElementById('previewVerlag').value;
 
-    document.getElementById('confirmBookData').addEventListener('click', function() {
-        // Copy data from preview modal to form
-        document.getElementById('titel').value = document.getElementById('previewTitel').value;
-        document.getElementById('autor').value = document.getElementById('previewAutor').value;
-        document.getElementById('genre').value = document.getElementById('previewGenre').value;
-        document.getElementById('verlag').value = document.getElementById('previewVerlag').value;
+            document.getElementById('isbn').value = document.getElementById('previewISBN13').value;
+            if (!document.getElementById('isbn').value) {
+                document.getElementById('isbn').value = document.getElementById('previewISBN10').value;
+            }
 
-        document.getElementById('isbn').value = document.getElementById('previewISBN13').value;
-        if (!document.getElementById('isbn').value) {
-            document.getElementById('isbn').value = document.getElementById('previewISBN10').value;
+            document.getElementById('preis').value = document.getElementById('previewPreis').value;
+            document.getElementById('jahr').value = document.getElementById('previewJahr').value;
+            document.getElementById('format').value = document.getElementById('previewFormat').value;
+            document.getElementById('laenge').value = document.getElementById('previewLaenge').value;
+            document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
+            document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
+
+            document.getElementById('bildImg').src = document.getElementById('previewBildImg').src;
+            document.getElementById('bild').value = document.getElementById('previewBildText').value;
+
+            // Hide modal
+            $('#bookPreviewModal').modal('hide');
         }
+    );
+    });
 
-        document.getElementById('preis').value = document.getElementById('previewPreis').value;
-        document.getElementById('jahr').value = document.getElementById('previewJahr').value;
-        document.getElementById('format').value = document.getElementById('previewFormat').value;
-        document.getElementById('laenge').value = document.getElementById('previewLaenge').value;
-        document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
-        document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
-
-        document.getElementById('bildImg').src = document.getElementById('previewBildImg').src;
-        document.getElementById('bild').value = document.getElementById('previewBildText').value;
-
-        // Hide modal
+    $('.close').on('click', function () {
         $('#bookPreviewModal').modal('hide');
     });
+
+
 </script>
 {% endblock %}

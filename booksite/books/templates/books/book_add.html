@@ -20,6 +20,9 @@
                         </div>
                     </div>
                 </div>
+                <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
 
             <!-- Additional Fields from the Model -->
@@ -257,8 +260,13 @@
         initializePreviewElements();
 
         const isbn = document.getElementById('isbn').value;
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
         console.log('Fetching book data for ISBN:', isbn);
+        
         if (isbn) {
+            loadingSpinner.style.display = 'inline-block';
+
             fetch('/books/get_isbn_data', {
                 method: 'POST',
                 headers: {
@@ -268,6 +276,8 @@
             })
             .then(response => response.json())
             .then(data => {
+            loadingSpinner.style.display = 'none';
+
                 if (data.error) {
                     alert(`Error: ${data.error}`);
                 } else {
@@ -289,7 +299,10 @@
                     document.getElementById('previewBildText').value = data.Bild || '';
                     // Set image source and log it
                     const previewBildImg = document.getElementById('previewBildImg');
-                    previewBildImg.src = "{{ url_for('static', filename='tempCover.png') }}";
+
+                    // appending a timestemp to the image url to prevent caching
+                    const timestamp = new Date().getTime();
+                    previewBildImg.src = "{{ url_for('static', filename='tempCover.png') }}" + '?t=' + timestamp;
 
                     // making the url clickable
                     const previewUrl = document.getElementById('previewUrl');
@@ -301,6 +314,7 @@
                 }
             })
             .catch(error => {
+                loadingSpinner.style.display = 'none';
                 console.error('Error fetching book data:', error);
             });
         }

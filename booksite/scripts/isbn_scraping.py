@@ -26,14 +26,16 @@ driver.get("https://www.isbn.de/")
 book_data = {}
 
 def search(driver, ISBN):
+    driver.get("https://www.isbn.de/")
     try:
         search_box = driver.find_element(By.ID, "searchbox")
-
         search_box.clear()
         search_box.send_keys(ISBN)
+        search_box.send_keys(Keys.RETURN)
     except Exception as e:
         print("Error while interacting with the input field:", e)
-    search_box.send_keys(Keys.RETURN)
+        return False
+    return True
 
 
 def get_titel():
@@ -125,9 +127,17 @@ def save_cover():
 def data_cleanup():
     try:
         #clean up book_data keys
-        book_data["Erscheinungsdatum"] = book_data["erschienen am"]
+        if "Autor" not in book_data:
+            book_data["Autor"] = "Unbekannt"
+        if "Jahr" not in book_data:
+            if "erschienen am" in book_data:
+                book_data["Jahr"] = book_data["erschienen am"][-4:]
+            elif "erschienen im" not in book_data:
+                book_data["Jahr"] = book_data["erschienen im"][-4:]
+
         book_data["Preis"] = book_data["Preis"].replace("*", "").replace(" ", "").replace("€", "").replace("$", "").replace(",", ".")
         book_data["ISBN-13"] = book_data["ISBN-13"].replace(" ", "")
+        book_data["ISBN-10"] = book_data["ISBN-10"].replace(" ", "")
 
         title = book_data.get("Title", "")
         isbn = book_data.get("ISBN-13", "")
@@ -141,15 +151,22 @@ def data_cleanup():
 
 def get_ISBN_data(ISBN):
     book_data.clear()
-    search(driver, ISBN)
+    if not search(driver, ISBN):
+        driver.quit()
+        return {"error": "Failed to find the search box element"}
     get_titel()
     get_ISBNtabel_data()
     get_beschreibung()
     get_genre()
     data_cleanup()
     save_cover()
-    driver.quit()
+
+    # Ensure the WebDriver is closed when the script exits
+    import atexit
+    atexit.register(driver.quit)
+
     return(book_data)
+
 
 #Testdata:
 #book_data = get_ISBN_data("978-3-608-98701-0")

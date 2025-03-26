@@ -1,16 +1,16 @@
+from time import sleep
+import os
+
 # Extract Book Data
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from webdriver_manager.chrome import ChromeDriverManager
 
-from time import sleep
 from bs4 import BeautifulSoup
-
 import urllib.request
 
 ### these options are relevant to run selenium on a remote server
@@ -113,7 +113,9 @@ def save_cover():
     try:
         img = driver.find_element(By.ID, "ISBNcover")
         # get the image source
-        #img.screenshot('booksite/scripts/tempCover.png')
+        if os.path.exists("booksite/static/tempCover.png"):
+            os.remove("booksite/static/tempCover.png")
+
         src = img.get_attribute('src')
         urllib.request.urlretrieve(src, "booksite/static/tempCover.png")
 

@@ -20,8 +20,16 @@
                         </div>
                     </div>
                 </div>
-                <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+                <div id="loadingSpinner" class=" spinner-border text-primary" role="status" style="display: none;">
                     <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="url" class="col-md-4">URL</label>
+                    <div class="col-md-8 input-group">
+                        <a type="text" class="form-control" id="url" name="url"></a>
+                    </div>
                 </div>
             </div>
 
@@ -331,6 +339,8 @@
             if (!document.getElementById('isbn').value) {
                 document.getElementById('isbn').value = document.getElementById('previewISBN10').value;
             }
+
+            document.getElementById('url').textContent = document.getElementById('previewUrl').innerText;
 
             document.getElementById('preis').value = document.getElementById('previewPreis').value;
             document.getElementById('jahr').value = document.getElementById('previewJahr').value;

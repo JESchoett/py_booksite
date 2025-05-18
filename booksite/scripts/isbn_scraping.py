@@ -73,14 +73,15 @@ def get_ISBNtabel_data():
                 value = row.text.split(key, 1)[-1].strip()
 
             if key and value:
-                if elements == 2:
+                if "Auflage" in key:
+                    bis = value.find("bis")
+                    value = key[bis:]
+                elif "cover" in key.lower():
                     book_data["Einband"] = key
                     book_data["Laenge"] = value
-                elif elements == 3:
-                    book_data["Jahr"] = key[-4:]
-                    book_data["Auflage"] = value
                 else:
                     book_data[key] = value
+
         except Exception as e:
             print(f"Error in row: {e}")
 

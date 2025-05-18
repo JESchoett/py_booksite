@@ -84,7 +84,7 @@ def book_add():
             return render_template("books/book_add.html", form=book_form)
         elif request.method == 'POST':
             if book_form.validate_on_submit():
-                move_file(book_form.bild.data)#
+                move_file(book_form.bild.data)
                 addBookOverForm(book_form=book_form, db=db)
                 return  redirect(url_for('books.index'))
             else:

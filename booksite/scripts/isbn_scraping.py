@@ -1,4 +1,4 @@
-from time import sleep
+import time
 import os
 
 # Extract Book Data
@@ -41,8 +41,8 @@ def search(driver, ISBN):
 def get_titel():
     try:
         ##Extracting the title of the book
-        title_data = driver.find_element(By.CSS_SELECTOR, "#content > div.isbnbook > div.isbnhead")
-        # Find all header elements within title_data
+        content = driver.find_element(By.ID, "content")
+        title_data = content.find_elements(By.CSS_SELECTOR, "isbnhead")
         header_elements = title_data.find_elements(By.CSS_SELECTOR, "h1, h2, h3, h4, h5, h6")
 
         title_text = title_data.text
@@ -151,8 +151,24 @@ def data_cleanup():
     except Exception as e:
         print(f"Error in cleanup: {e}")
 
+# Limit Requests to 2 per Min
+MIN_REQUEST_INTERVAL = 30  # in Seconds
+_last_request_time = 0
+
+def wait_if_needed():
+    global _last_request_time
+    now = time.time()
+    last_request_difference = now - _last_request_time
+
+    if last_request_difference < MIN_REQUEST_INTERVAL:
+        sleep_time = MIN_REQUEST_INTERVAL - last_request_difference
+        print(f"Rate limit active. Waiting {sleep_time:.1f}s...")
+        time.sleep(sleep_time)
+    _last_request_time = time.time()
+
 
 def get_ISBN_data(ISBN):
+    wait_if_needed()
     book_data.clear()
     if not search(driver, ISBN):
         driver.quit()
@@ -172,8 +188,8 @@ def get_ISBN_data(ISBN):
 
 
 #Testdata:
-#book_data = get_ISBN_data("978-3-608-98701-0")
-#print(book_data)
+book_data = get_ISBN_data("978-3-608-98701-0")
+print(book_data)
 #
 ##visual test of get_ISBN_data
 #for key, value in book_data.items():

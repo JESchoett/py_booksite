@@ -1,44 +1,77 @@
 # 📚 Bücher-Funktionen
-- [x] Anzeige aller Bücher #books #done
-- [x] Anzeige nur der nicht versteckten Bücher #books #done
-- [x] Anlegen eines neuen Buchs #books #done
-- [ ] Details Seite eines Buchs anzeigen #books #todo
-- [ ] Bestehendes Buch ändern #books #check
-- [ ] Buch löschen #books #check
+- Anzeige aller Bücher #books {cm:2025-05-19}
+- Anzeige nur der nicht versteckten Bücher #books {cm:2025-05-19}
+- Anlegen eines neuen Buchs #books {cm:2025-05-19}
+- Bestehendes Buch ändern #books
+  - Aufnahme aller felder #books
+  - Bild bei Anpassung aus der Datenbank löschen #books
+  - ISBN Fetch einbauen #books
+- Buch löschen #books #check
+- Buchseiten Styling & Inhalt #books
+  - `book_overview.html` – Layout und Anzeige prüfen
+  - `book_add.html` – Alle Felder vorhanden? Buttons/Validierung prüfen
+  - `book_details.html` – Alle Felder anzeigen, inkl. Bildanzeige
+  - `book_breadcrumb.html` – Pfadnavigation prüfen
+- `bookForm.py` prüfen: Validierungen & Defaults #books #form
+- `routes.py` prüfen: Fehlerbehandlung, Redirects #books #routes
+- `models.py` prüfen: Felder konsistent mit Formularen? #books #models
+- `routes_test.py` schreiben oder erweitern #books #tests
 
 # 🎬 Filme-Funktionen
-- [ ] Anzeige aller Filme #movies #check
-- [ ] Anzeige nur der nicht versteckten Filme #movies #check
-- [ ] Anlegen eines neuen Films #movies #check
-- [ ] Bestehenden Film ändern #movies #check
-- [ ] Film löschen #movies #check
+- Anzeige aller Filme #movies #check
+- Anzeige nur der nicht versteckten Filme #movies #check
+- Anlegen eines neuen Films #movies #check
+- Bestehenden Film ändern #movies #check
+- Film löschen #movies #check
+- Filmseiten Styling & Inhalt #movies
+  - `movies_overview.html` – Übersicht prüfen
+  - `movies_add.html` – Formular prüfen
+  - `movies_details.html` – Detailanzeige und Bild
+- `movieForm.py` prüfen: Defaults & Validatoren #movies #form
+- `routes.py` prüfen: Fehlerfälle abfangen #movies #routes
+- `models.py` prüfen: Felder konsistent mit Formular? #movies #models
+- `routes_test.py` erstellen/prüfen #movies #tests
 
 # 🖼️ Bilder / Cover
-- [ ] Bilder hochladen #images #todo
-- [x] Bilder speichern (Storage) #images #done
-- [ ] Bilder anzeigen #images #todo
-- [ ] Ansicht nur mit Bildern/Cover #images #todo
+- Bilder hochladen #images
+- Bilder speichern (Storage) #images
+- Bilder anzeigen in Details-Seite (Bücher & Filme) #images
+- Ansicht nur mit Bildern/Cover #images
+- `move_file.py` prüfen #images #scripts
+- `remove_file.py` prüfen #images #scripts
+- Speicherpfad-Struktur (Ordner z. B. `/static/images`) #images #infra
 
 # 🧭 Navigation / Breadcrumbs
-- [ ] Breadcrumbs implementieren #navigation #todo
-  - [ ] Zurück zur Buchübersicht #navigation #todo
-  - [ ] Zurück zur Buchanlage #navigation #todo
-  - [ ] Zurück zur Buchdetails #navigation #todo
-  - [ ] Zurück zur Filmübersicht #navigation #todo
-  - [ ] Zurück zur Filmanlage #navigation #todo
-  - [ ] Zurück zur Filmdetails #navigation #todo
+- Breadcrumbs implementieren #navigation
+  - Zurück zur Buchübersicht #navigation
+  - Zurück zur Buchanlage #navigation
+  - Zurück zur Buchdetails #navigation
+  - Zurück zur Filmübersicht #navigation
+  - Zurück zur Filmanlage #navigation
+  - Zurück zur Filmdetails #navigation
+- `book_breadcrumb.html` korrekt eingebunden? #navigation
 
 # 🔒 Benutzerrechte / Rollen
-- [x] "Anlegen"-Button für Nicht-Admins verstecken #auth #done
+- "Anlegen"-Button für Nicht-Admins verstecken #auth {cm:2025-05-19}
+- Login-/Signup-Flow prüfen (Routing, Redirects) #auth
+- Benutzerrollen (Admin/Nutzer) zentral abfragen (Session, Decorator?) #auth
+- `login_site.html` – Style & Validierung #auth
+- `signup_site.html` – Style & Validierung #auth
+- `loginForm.py`, `signupForm.py` – Felder & Validatoren #auth #form
 
 # ⚙️ Technische Funktionen
-- [x] Erstellung einer Test-Datenbank (`test.db`) #tech #done
-- [ ] Backup der Datenbank bei Docker-Einsatz #docker #todo
-- [ ] Check: Bild-Storage funktioniert korrekt? #images #check
+- Erstellung einer Test-Datenbank (`test.db`) #tech {cm:2025-05-19}
+- Testabdeckung für alle Routen (Books, Movies, Login) #tech #tests
+- `run.py` und `app.py` auf sauberen Einstieg prüfen #tech
+- Backup der Datenbank bei Docker-Einsatz #docker
+- Check: Bild-Storage funktioniert korrekt? #images #check
 
 # 🧪 Extras
-- [x] ISBN per Scan aufnehmen #isbn #done
+- ISBN per Scan aufnehmen #isbn {cm:2025-05-19}
+- `isbn_scraping.py` testen & robust machen (Fehlermeldungen, Try/Except) #isbn #scripts
 
+---
 
-Fürs nächste mal #todo
-Ausgabe der Projekt Struktur zur übersicht verschaffung von notizen
+# 📂 Projektstruktur verstehen & nutzen
+- Ausgabe der Projektstruktur regelmäßig zur Notizpflege nutzen (`find . -type f \( -name "*.py" -o -name "*.html" \) | grep -v .venv | grep -v migrations > structure.txt`) #infra #overview  {cm:2025-05-19}
+- Struktur-Übersicht als Markdown exportieren (für neue Contributor oder Review) #infra #doc

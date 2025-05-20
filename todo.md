@@ -6,11 +6,15 @@
   - Aufnahme aller felder #books
   - Bild bei Anpassung aus der Datenbank löschen #books
   - ISBN Fetch einbauen #books
-- Buch löschen #books #check
+- Buch löschen #books #check {cm:2025-05-20}
 - Buchseiten Styling & Inhalt #books
   - `book_overview.html` – Layout und Anzeige prüfen
   - `book_add.html` – Alle Felder vorhanden? Buttons/Validierung prüfen
+    - bild vom rechner hochladen //TODO
   - `book_details.html` – Alle Felder anzeigen, inkl. Bildanzeige
+    - alle felder
+    - styling, wie beim book `book_add.html`
+    - funktionen (Anpassung und Löschung)
   - `book_breadcrumb.html` – Pfadnavigation prüfen
 - `bookForm.py` prüfen: Validierungen & Defaults #books #form
 - `routes.py` prüfen: Fehlerbehandlung, Redirects #books #routes

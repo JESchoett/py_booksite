@@ -32,7 +32,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Additional Fields from the Model -->
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -42,10 +41,10 @@
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="bild" class="col-md-4">Bild</label>
+                    <label for="bild" class="col-md-4">Bild Name</label>
                     <div class="col-md-8">
+                        <img id="coverBild" src="" alt="Book Image" class="img-fluid">
                         <input type="text" class="form-control" id="bild" name="bild">
-                        <img id="bildImg" src="" alt="Book Image" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -170,7 +169,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="previewBildText">Bild</label>
                             <input type="text" class="form-control" id="previewBildText">
-                            <img id="previewBildImg" src="" alt="Book Image" class="img-fluid">
+                            <img id="previewCoverBild" src="" alt="Book Image" class="img-fluid">
                         </div>
                     </div>
                     <div class="row">
@@ -259,7 +258,7 @@
         document.getElementById('previewAuflage').value = '';
         document.getElementById('previewJahr').value = '';
         document.getElementById('previewBildText').value = '';
-        document.getElementById('previewBildImg').src = '';
+        document.getElementById('previewCoverBild').src = '';
         document.getElementById('previewUrl').innerText = '';
         document.getElementById('previewUrl').href = '#';
     }
@@ -306,11 +305,11 @@
 
                     document.getElementById('previewBildText').value = data.Bild || '';
                     // Set image source and log it
-                    const previewBildImg = document.getElementById('previewBildImg');
+                    const previewCoverBild = document.getElementById('previewCoverBild');
 
                     // appending a timestemp to the image url to prevent caching
                     const timestamp = new Date().getTime();
-                    previewBildImg.src = "{{ url_for('static', filename='tempCover.png') }}" + '?t=' + timestamp;
+                    previewCoverBild.src = "{{ url_for('static', filename='tempCover.png') }}" + '?t=' + timestamp;
 
                     // making the url clickable
                     const previewUrl = document.getElementById('previewUrl');
@@ -349,7 +348,7 @@
             document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
             document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
 
-            document.getElementById('bildImg').src = document.getElementById('previewBildImg').src;
+            document.getElementById('coverBild').src = document.getElementById('previewCoverBild').src;
             document.getElementById('bild').value = document.getElementById('previewBildText').value;
 
             // Hide modal

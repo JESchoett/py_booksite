@@ -18,6 +18,7 @@
   - `book_breadcrumb.html` – Pfadnavigation prüfen
 - `bookForm.py` prüfen: Validierungen & Defaults #books #form
 - `routes.py` prüfen: Fehlerbehandlung, Redirects #books #routes
+  - bei book_add daten einer Bookform behalten, sollte ich auf einen Fehler laufen //TODO
 - `models.py` prüfen: Felder konsistent mit Formularen? #books #models
 - `routes_test.py` schreiben oder erweitern #books #tests
 

@@ -13,11 +13,14 @@ def move_file(new_name):
 
     # Ensure the destination directory exists
     os.makedirs(dest_dir, exist_ok=True)
+    if os.path.isfile(dest_path):
+        return "file name already exists"
 
     # Move and rename the file
     if os.path.isfile(src_path):
         try:
             shutil.move(src_path, dest_path)
+            return 0
         except Exception as e:
             return str(e)
     return "no file to move"

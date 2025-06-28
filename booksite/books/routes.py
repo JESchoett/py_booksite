@@ -44,7 +44,7 @@ def addBookOverForm(book_form, db):
                 subgenreRatgeber=book_form.subgenreRatgeber.data,
                 auflage=book_form.auflage.data,
                 schlagw=book_form.schlagw.data,
-                bild=book_form.bild.data)
+                bild=book_form.bildName.data)
     db.session.add(book)
     db.session.commit()
 
@@ -68,7 +68,7 @@ def alterBookOverForm(book, book_form, db):
     book.subgenreRatgeber = book_form.subgenreRatgeber.data
     book.auflage = book_form.auflage.data
     book.schlagw = book_form.schlagw.data
-    book.bild = book_form.bild.data
+    book.bild = book_form.bildName.data
     db.session.commit()
 
 
@@ -84,7 +84,7 @@ def book_add():
             return render_template("books/book_add.html", form=book_form)
         elif request.method == 'POST':
             if book_form.validate_on_submit():
-                return_value = move_file(book_form.bild.data)
+                return_value = move_file(book_form.bildName.data)
                 if return_value != 0: #TODO: keep the data from the form
                     flash(f"{return_value}", "danger")
                     book_form = BookForm(request.form) #keep the form data
@@ -124,13 +124,13 @@ def book_delete(nummer):
 @login_required
 def get_isbn_data():
     isbn = request.json.get('isbn')
-    if not isbn:
-        return jsonify({'error': 'ISBN is required'}), 400
-    try:
-        book_data = get_ISBN_data(isbn)
-        return jsonify(book_data)
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    #if not isbn:
+    #    return jsonify({'error': 'ISBN is required'}), 400
+    #try:
+    #    book_data = get_ISBN_data(isbn)
+    #    return jsonify(book_data)
+    #except Exception as e:
+    #    return jsonify({'error': str(e)}), 500
     ##Testing:
-    #bookdata = {'Title': 'Der Herr der Ringe\nIn der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht\nvon J.R.R. Tolkien, aus dem Englischen übersetzt von Wolfgang Krege Der Herr der Ringe In der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht', 'Url': 'https://www.isbn.de/buch/9783608987010/der-herr-der-ringe', 'Einband': 'Softcover', 'Laenge': '1568 Seiten', 'Jahr': '2022', 'Auflage': '1', 'Verlag': 'Klett-Cotta', 'Autor': 'J.R.R. Tolkien', 'erschienen am': '02.09.2022', 'ISBN-10': '3-608-98701-0', 'ISBN-13': '978-3-608-98701-0', 'Maße': '19,5 12,5 1201 gr', 'Lieferstatus': 'verfügbar', 'Preis': '35.00', 'Beschreibung': '»Ein Ring, sie zu knechten, sie alle zu finden, ins Dunkel zu treiben und ewig zu binden.« Dreibändige Ausgabe zur Serienverfilmung Vor unvordenklichen Zeiten wurden die Ringe der Macht von den Elben geschaffen und Sauron, der Dunkle Herrscher, schmiedete heimlich den Einen Ring und füllte ihn mit seiner Macht, auf dass er über alle anderen Ringe und ihre Träger gebieten konnte. Der Eine Ring wurde Sauron im Lauf der Zeit genommen und so sehr er ihn auch in ganz Mittelerde suchte, er blieb dennoch für ihn verloren. Zeitalter später fällt der Ring in die Hände des Hobbits Bilbo Beutlin, der ihn an seinen Neffen Frodo weitergibt … und so beginnt das größte und gefährlichste Abenteuer der Fantasyliteratur. Im ersten Band »Die Gefährten« bekommt der junge Frodo in einem ruhigen Dorf im Auenland ein Geschenk, das sein Leben für immer verändern wird – den Einen Ring, der seit Jahrhunderten als verschollen galt. Ein mächtiges und furchterregendes Ding, mit dem der Dunkle Herrscher einst Mittelerde versklavte.\xa0Nun erhebt sich die Dunkelheit erneut, und Frodo muss tief in das Reich des Dunklen Herrschers vordringen, bis zu dem einzigen Ort, an dem der Ring zerstört werden kann: dem Schicksalsberg.\xa0Die Reise wird Frodos Mut, seine Freundschaften und sein Herz auf die Probe stellen. Denn der Ring korrumpiert alle, die ihn tragen. Kann Frodo den Ring vernichten, bevor der Ring ihn vernichtet? In »Die zwei Türme« , dem zweiten Band, sind die Gefährten verstreut. Einige bereiten sich auf den Krieg gegen den Dunklen Herrscher vor, einige stellen sich dem Verrat des verderbten Zauberers Saruman entgegen. Nur Frodo und Sam sind übrig, um den verfluchten Ring in den Feuern des Schicksalsberges zu vernichten.\xa0Der Schicksalsberg liegt im Herzen des Reiches des Dunklen Herrschers. Ihr einziger Führer auf der gefährlichen Reise dorthin ist Gollum, eine hinterlistige und besessene Kreatur, die einst den Ring besaß und sich entsetzlich danach sehnt, ihn wieder zu kriegen. Als sich die dunklen Mächte sammeln, liegt das Schicksal von Mittelerde in den Händen von zwei einsamen Hobbits. Wird Gollum sie in den Tod führen? Im dritten und letzten Band »Die Rückkehr des Königs« ist der Dunkle Herrscher auferstanden. Und während er Horden von Orks entfesselt, um ganz Mittelerde zu unterwerfen, kämpfen sich Frodo und Sam tief in sein Reich nach Mordor vor. Um Sauron zu besiegen, muss der Eine Ring in den Feuern des Schicksalsberges vernichtet werden. Doch der Weg dorthin ist unvorstellbar schwer, und Frodos Kräfte schwinden. Der Ring macht sich alle, die ihn tragen, untertan und Frodo bleibt kaum noch Zeit. Werden Sam und Frodo ihr Ziel erreichen, oder wird der Dunkle Herrscher am Ende wieder über ganz Mittelerde herrschen?', 'Genre': 'Epische Fantasy (High Fantasy)', 'Erscheinungsdatum': '02.09.2022', 'Bild': 'DerHerrderRinge\nI_9783608987010.png'}
-    #return jsonify(bookdata)
+    bookdata = {'Title': 'Der Herr der Ringe\nIn der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht\nvon J.R.R. Tolkien, aus dem Englischen übersetzt von Wolfgang Krege Der Herr der Ringe In der überarbeiteten Übersetzung von Wolfgang Krege | Filmausgabe zur Serie Die Ringe der Macht', 'Url': 'https://www.isbn.de/buch/9783608987010/der-herr-der-ringe', 'Einband': 'Softcover', 'Laenge': '1568 Seiten', 'Jahr': '2022', 'Auflage': '1', 'Verlag': 'Klett-Cotta', 'Autor': 'J.R.R. Tolkien', 'erschienen am': '02.09.2022', 'ISBN-10': '3-608-98701-0', 'ISBN-13': '978-3-608-98701-0', 'Maße': '19,5 12,5 1201 gr', 'Lieferstatus': 'verfügbar', 'Preis': '35.00', 'Beschreibung': '»Ein Ring, sie zu knechten, sie alle zu finden, ins Dunkel zu treiben und ewig zu binden.« Dreibändige Ausgabe zur Serienverfilmung Vor unvordenklichen Zeiten wurden die Ringe der Macht von den Elben geschaffen und Sauron, der Dunkle Herrscher, schmiedete heimlich den Einen Ring und füllte ihn mit seiner Macht, auf dass er über alle anderen Ringe und ihre Träger gebieten konnte. Der Eine Ring wurde Sauron im Lauf der Zeit genommen und so sehr er ihn auch in ganz Mittelerde suchte, er blieb dennoch für ihn verloren. Zeitalter später fällt der Ring in die Hände des Hobbits Bilbo Beutlin, der ihn an seinen Neffen Frodo weitergibt … und so beginnt das größte und gefährlichste Abenteuer der Fantasyliteratur. Im ersten Band »Die Gefährten« bekommt der junge Frodo in einem ruhigen Dorf im Auenland ein Geschenk, das sein Leben für immer verändern wird – den Einen Ring, der seit Jahrhunderten als verschollen galt. Ein mächtiges und furchterregendes Ding, mit dem der Dunkle Herrscher einst Mittelerde versklavte.\xa0Nun erhebt sich die Dunkelheit erneut, und Frodo muss tief in das Reich des Dunklen Herrschers vordringen, bis zu dem einzigen Ort, an dem der Ring zerstört werden kann: dem Schicksalsberg.\xa0Die Reise wird Frodos Mut, seine Freundschaften und sein Herz auf die Probe stellen. Denn der Ring korrumpiert alle, die ihn tragen. Kann Frodo den Ring vernichten, bevor der Ring ihn vernichtet? In »Die zwei Türme« , dem zweiten Band, sind die Gefährten verstreut. Einige bereiten sich auf den Krieg gegen den Dunklen Herrscher vor, einige stellen sich dem Verrat des verderbten Zauberers Saruman entgegen. Nur Frodo und Sam sind übrig, um den verfluchten Ring in den Feuern des Schicksalsberges zu vernichten.\xa0Der Schicksalsberg liegt im Herzen des Reiches des Dunklen Herrschers. Ihr einziger Führer auf der gefährlichen Reise dorthin ist Gollum, eine hinterlistige und besessene Kreatur, die einst den Ring besaß und sich entsetzlich danach sehnt, ihn wieder zu kriegen. Als sich die dunklen Mächte sammeln, liegt das Schicksal von Mittelerde in den Händen von zwei einsamen Hobbits. Wird Gollum sie in den Tod führen? Im dritten und letzten Band »Die Rückkehr des Königs« ist der Dunkle Herrscher auferstanden. Und während er Horden von Orks entfesselt, um ganz Mittelerde zu unterwerfen, kämpfen sich Frodo und Sam tief in sein Reich nach Mordor vor. Um Sauron zu besiegen, muss der Eine Ring in den Feuern des Schicksalsberges vernichtet werden. Doch der Weg dorthin ist unvorstellbar schwer, und Frodos Kräfte schwinden. Der Ring macht sich alle, die ihn tragen, untertan und Frodo bleibt kaum noch Zeit. Werden Sam und Frodo ihr Ziel erreichen, oder wird der Dunkle Herrscher am Ende wieder über ganz Mittelerde herrschen?', 'Genre': 'Epische Fantasy (High Fantasy)', 'Erscheinungsdatum': '02.09.2022', 'Bild': 'DerHerrderRinge\nI_9783608987010.png'}
+    return jsonify(bookdata)

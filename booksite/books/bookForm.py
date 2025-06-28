@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, IntegerField, FloatField, DateField
 from wtforms.validators import DataRequired, Optional
 
@@ -22,6 +23,6 @@ class BookForm(FlaskForm):
     subgenreRatgeber = StringField(label='Subgenre Ratgeber', default=" ", validators=[Optional()])
     auflage = IntegerField(label='Auflage', default=0, validators=[Optional()])
     schlagw = StringField(label='Schlagw', default=" ", validators=[Optional()])
-    bild = StringField(label='Bild', default=" ", validators=[Optional()])
+    bildName = StringField(label='Bild', default=" ", validators=[Optional()])
     edatum = DateField(label='Erscheinungsdatum', format='%d-%m-%Y', validators=[Optional()])
     submit = SubmitField(label='Submit')

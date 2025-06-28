@@ -41,10 +41,11 @@
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="bild" class="col-md-4">Bild Name</label>
+                    <label for="bildName" class="col-md-4">Bild</label>
                     <div class="col-md-8">
-                        <img id="coverBild" src="" alt="Book Image" class="img-fluid">
-                        <input type="text" class="form-control" id="bild" name="bild">
+                        <img id="bildCover" src="" alt="Book Image" class="img-fluid">
+                        <input type="file" class="form-control-file" id="bildCoverInput" name="bildCoverInput" accept="image/*">
+                        <input type="text" class="form-control" id="bildName" name="bild">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -270,7 +271,6 @@
         const loadingSpinner = document.getElementById('loadingSpinner');
 
         console.log('Fetching book data for ISBN:', isbn);
-        
         if (isbn) {
             loadingSpinner.style.display = 'inline-block';
 
@@ -326,6 +326,7 @@
             });
         }
     });
+
     document.querySelectorAll('#confirmBookData, #confirmBookDataFooter').forEach(button => {
         button.addEventListener('click', function() {
             // Copy data from preview modal to form
@@ -348,8 +349,8 @@
             document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
             document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
 
-            document.getElementById('coverBild').src = document.getElementById('previewCoverBild').src;
-            document.getElementById('bild').value = document.getElementById('previewBildText').value;
+            document.getElementById('bildCover').src = document.getElementById('previewCoverBild').src;
+            document.getElementById('bildName').value = document.getElementById('previewBildText').value;
 
             // Hide modal
             $('#bookPreviewModal').modal('hide');
@@ -357,10 +358,27 @@
     );
     });
 
-    $('.close').on('click', function () {
-        $('#bookPreviewModal').modal('hide');
+    document.querySelectorAll('.close').forEach(function(btn) {
+        btn.addEventListener('click', function () {
+            document.getElementById('bookPreviewModal').classList.remove('show');
+            document.getElementById('bookPreviewModal').style.display = 'none';
+            document.body.classList.remove('modal-open');
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        });
     });
 
+    document.getElementById('bildCoverInput').addEventListener('change', function(event) {
+        console.log('Image file selected:', event.target.files[0]);
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('bildCover').src = e.target.result;
+                document.getElementById('bildName').value = file.name;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
 </script>
 {% endblock %}

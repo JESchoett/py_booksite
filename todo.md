@@ -9,8 +9,9 @@
 - Buch löschen #books #check {cm:2025-05-20}
 - Buchseiten Styling & Inhalt #books
   - `book_overview.html` – Layout und Anzeige prüfen
+    Kann ich evtl. die Komplett löschen und nur `book_add.html` verwenden?
   - `book_add.html` – Alle Felder vorhanden? Buttons/Validierung prüfen
-    - bild vom rechner hochladen //TODO
+    - bild vom rechner hochladen {cm:2025-06-28}
   - `book_details.html` – Alle Felder anzeigen, inkl. Bildanzeige
     - alle felder
     - styling, wie beim book `book_add.html`
@@ -19,6 +20,7 @@
 - `bookForm.py` prüfen: Validierungen & Defaults #books #form
 - `routes.py` prüfen: Fehlerbehandlung, Redirects #books #routes
   - bei book_add daten einer Bookform behalten, sollte ich auf einen Fehler laufen //TODO
+  - sollten die `addBookOverForm` oder `alterBookOverForm` auf fehler laufen, sollte das Bild der Speicherung gelöscht werden
 - `models.py` prüfen: Felder konsistent mit Formularen? #books #models
 - `routes_test.py` schreiben oder erweitern #books #tests
 
@@ -73,10 +75,11 @@
 
 # 🧪 Extras
 - ISBN per Scan aufnehmen #isbn {cm:2025-05-19}
-- `isbn_scraping.py` testen & robust machen (Fehlermeldungen, Try/Except) #isbn #scripts
+- `isbn_scraping.py` testen & robust machen (Fehlermeldungen, Try/Except) #isbn #scripts {cm:2025-06-28}
+- `isbn_scraping.py` umbau zu einem API Call
 
 ---
 
 # 📂 Projektstruktur verstehen & nutzen
-- Ausgabe der Projektstruktur regelmäßig zur Notizpflege nutzen (`find . -type f \( -name "*.py" -o -name "*.html" \) | grep -v .venv | grep -v migrations > structure.txt`) #infra #overview  {cm:2025-05-19}
-- Struktur-Übersicht als Markdown exportieren (für neue Contributor oder Review) #infra #doc
+- Ausgabe der Projektstruktur regelmäßig zur Notizpflege nutzen (`find . -type f \( -name "*.py" -o -name "*.html" \) | grep -v .venv | grep -v migrations > structure.txt`) #overview  {cm:2025-05-19}
+- Struktur-Übersicht als Markdown exportieren #doc

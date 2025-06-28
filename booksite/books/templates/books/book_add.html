@@ -7,14 +7,14 @@
 
 <div class="jumbotron">
     <div class="container">
-        <form method="POST" action="{{ url_for('books.book_add') }}">
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('books.book_add') }}">
             {{ form.hidden_tag() }}
-            <!-- ISBN Field with Search Button -->
+            
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="isbn" class="col-md-4">ISBN</label>
                     <div class="col-md-8 input-group">
-                        <input type="text" class="form-control" id="isbn" name="isbn">
+                        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ form.isbn.data or '' }}" placeholder="ISBN eingeben">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="fetchBookData">🔎</button>
                         </div>
@@ -24,6 +24,7 @@
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="url" class="col-md-4">URL</label>
@@ -32,12 +33,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Additional Fields from the Model -->
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="titel" class="col-md-4">Titel</label>
                     <div class="col-md-8">
-                        <textarea class="form-control" id="titel" name="titel" rows="5"></textarea>
+                        <textarea class="form-control" id="titel" name="titel" rows="5" value="{{ form.titel.data or '' }}" placeholder="Titel"></textarea>
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -45,97 +45,103 @@
                     <div class="col-md-8">
                         <img id="bildCover" src="" alt="Book Image" class="img-fluid">
                         <input type="file" class="form-control-file" id="bildCoverInput" name="bildCoverInput" accept="image/*">
-                        <input type="text" class="form-control" id="bildName" name="bild">
+                        <input type="text" class="form-control" id="bildName" name="bild" value="{{ form.bildName.data or '' }}" placeholder="Bild Name">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="autor" class="col-md-4">Autor</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="autor" name="autor">
+                        <input type="text" class="form-control" id="autor" name="autor" value="{{ form.autor.data or '' }}" placeholder="Autor">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="genre" class="col-md-4">Genre</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="genre" name="genre">
+                        <input type="text" class="form-control" id="genre" name="genre" value="{{ form.genre.data or '' }}" placeholder="Genre">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="format" class="col-md-4">Format</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="format" name="format">
+                        <input type="text" class="form-control" id="format" name="format" value="{{ form.format.data or '' }}" placeholder="Format">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="verlag" class="col-md-4">Verlag</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="verlag" name="verlag">
+                        <input type="text" class="form-control" id="verlag" name="verlag" value="{{ form.verlag.data or '' }}" placeholder="Verlag">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="laenge" class="col-md-4">Länge</label>
+                    <label for="seiten" class="col-md-4">Seiten Anzahl</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="laenge" name="laenge">
+                        <input type="text" class="form-control" id="seiten" name="seiten" value="{{ form.seiten.data or '' }}" placeholder="Seiten Anzahl">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="preis" class="col-md-4">Preis</label>
                     <div class="col-md-8">
-                        <input type="number" class="form-control" id="preis" name="preis" step="0.01">
+                        <input type="number" class="form-control" id="preis" name="preis" step="0.01" value="{{ form.preis.data or '' }}" placeholder="Preis">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="jahr" class="col-md-4">Jahr</label>
+                    <label for="jahr" class="col-md-4">Erscheinungsjahr</label>
                     <div class="col-md-8">
-                        <input type="number" class="form-control" id="jahr" name="jahr">
+                        <input type="number" class="form-control" id="jahr" name="jahr" value="{{ form.jahr.data or '' }}" placeholder="Jahr">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="standort" class="col-md-4">Standort</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="standort" name="standort">
+                        <input type="text" class="form-control" id="standort" name="standort" value="{{ form.standort.data or '' }}" placeholder="Standort">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="subtitel" class="col-md-4">Subtitel</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="subtitel" name="subtitel">
+                        <input type="text" class="form-control" id="subtitel" name="subtitel" value="{{ form.subtitel.data or '' }}" placeholder="Subtitel">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="subgenreRomane" class="col-md-4">Subgenre Romane</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="subgenreRomane" name="subgenreRomane">
+                        <input type="text" class="form-control" id="subgenreRomane" name="subgenreRomane" value="{{ form.subgenreRomane.data or '' }}" placeholder="Subgenre Romane">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="subgenreSachbuchRatgeber" class="col-md-4">Subgenre Sachbuch Ratgeber</label>
+                    <label for="subgenreSachbuchRatgeber" class="col-md-4">Subgenre Sachbuch/Ratgeber</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="subgenreSachbuchRatgeber" name="subgenreSachbuchRatgeber">
+                        <input type="text" class="form-control" id="subgenreSachbuchRatgeber" name="subgenreSachbuchRatgeber" value="{{ form.subgenreSachbuchRatgeber.data or '' }}" placeholder="Subgenre Sachbuch/Ratgeber">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="subgenreRatgeber" class="col-md-4">Subgenre Ratgeber</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="subgenreRatgeber" name="subgenreRatgeber">
+                        <input type="text" class="form-control" id="subgenreRatgeber" name="subgenreRatgeber" value="{{ form.subgenreRatgeber.data or '' }}" placeholder="Subgenre Ratgeber">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="auflage" class="col-md-4">Auflage</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="auflage" name="auflage">
+                        <input type="text" class="form-control" id="auflage" name="auflage" value="{{ form.auflage.data or '' }}" placeholder="Auflage">
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="schlagw" class="col-md-4">Schlagw</label>
+                    <label for="schlagw" class="col-md-4">Schlagwort</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="schlagw" name="schlagw">
+                        <input type="text" class="form-control" id="schlagw" name="schlagw" value="{{ form.schlagw.data or '' }}" placeholder="Schlagwort">
                     </div>
                 </div>
-                <div class="col-md-12 d-flex align-items-center mb-3">
-                    <div class="col-md-12 mb-3">
-                        <label for="inhaltsangabe" class="col-md-4">Inhaltsangabe</label>
-                        <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5"></textarea>
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="bemerkungen" class="col-md-4">Bemerkungen</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="bemerkungen" name="bemerkungen" rows="5" value="{{ form.bemerkungen.data}}" placeholder="Eigene Bemerkungen"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="in haltsangabe" class="col-md-4">Inhaltsangabe</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" value="{{ form.inhaltsangabe.data}}" placeholder="Inhaltsangabe des Buches"></textarea>
                     </div>
                 </div>
             </div>
@@ -179,8 +185,8 @@
                             <input type="text" class="form-control" id="previewAutor">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="previewLaenge">Laenge</label>
-                            <input type="text" class="form-control" id="previewLaenge">
+                            <label for="previewSeiten">Seiten Anzahl</label>
+                            <input type="text" class="form-control" id="previewSeiten">
                         </div>
                     </div>
                     <div class="row">
@@ -254,7 +260,7 @@
         document.getElementById('previewISBN13').value = '';
         document.getElementById('previewPreis').value = '';
         document.getElementById('previewFormat').value = '';
-        document.getElementById('previewLaenge').value = '';
+        document.getElementById('previewSeiten').value = '';
         document.getElementById('previewInhaltsangabe').value = '';
         document.getElementById('previewAuflage').value = '';
         document.getElementById('previewJahr').value = '';
@@ -298,7 +304,7 @@
                     document.getElementById('previewISBN13').value = data['ISBN-13'] || '';
                     document.getElementById('previewPreis').value = data.Preis || '';
                     document.getElementById('previewFormat').value = data.Einband || '';
-                    document.getElementById('previewLaenge').value = data['Laenge'] || '';
+                    document.getElementById('previewSeiten').value = data['laenge'] || '';
                     document.getElementById('previewInhaltsangabe').value = data['Beschreibung'] || '';
                     document.getElementById('previewAuflage').value = data.Auflage || '';
                     document.getElementById('previewJahr').value = data['Jahr'] || '';
@@ -345,7 +351,7 @@
             document.getElementById('preis').value = document.getElementById('previewPreis').value;
             document.getElementById('jahr').value = document.getElementById('previewJahr').value;
             document.getElementById('format').value = document.getElementById('previewFormat').value;
-            document.getElementById('laenge').value = document.getElementById('previewLaenge').value;
+            document.getElementById('seiten').value = document.getElementById('previewSeiten').value;
             document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
             document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
 

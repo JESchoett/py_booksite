@@ -24,5 +24,7 @@ class BookForm(FlaskForm):
     auflage = IntegerField(label='Auflage', default=0, validators=[Optional()])
     schlagw = StringField(label='Schlagw', default=" ", validators=[Optional()])
     bildName = StringField(label='Bild', default=" ", validators=[Optional()])
-    edatum = DateField(label='Erscheinungsdatum', format='%d-%m-%Y', validators=[Optional()])
+    bildCoverInput = FileField('Cover hochladen', validators=[
+        Optional(), FileAllowed(['jpg', 'jpeg', 'png'], 'Nur Bilddateien!')
+    ])
     submit = SubmitField(label='Submit')

@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash, session, jsonify
 from flask_login import login_required
+from werkzeug.datastructures import CombinedMultiDict
 
 from booksite.app import db
 
@@ -7,8 +8,7 @@ from booksite.books.models import Book
 from booksite.books.bookForm import BookForm
 
 from booksite.scripts.isbn_scraping import get_ISBN_data
-from booksite.scripts.move_file import move_file
-from booksite.scripts.remove_file import remove_file
+from booksite.scripts.cover_file_manager import save_cover, move_file, remove_file
 
 
 books = Blueprint('books', __name__, template_folder='templates')
@@ -83,17 +83,26 @@ def book_add():
         if request.method == 'GET':
             return render_template("books/book_add.html", form=book_form)
         elif request.method == 'POST':
+            # Use CombinedMultiDict to allow file download
+            book_form = BookForm(CombinedMultiDict([request.form, request.files]))
+
             if book_form.validate_on_submit():
-                return_value = move_file(book_form.bildName.data)
-                if return_value != 0: #TODO: keep the data from the form
-                    flash(f"{return_value}", "danger")
-                    book_form = BookForm(request.form) #keep the form data
+                return_value = "Saving the user Input"
+                if book_form.bildCoverInput.data:
+                    save_cover(book_form.bildCoverInput.data)
+                    return_value = move_file(book_form.bildName.data)  #TODO: No name is getting passed
+
+                if return_value != 0:
+                    flash(f"{return_value}")
+                    book_form = BookForm(request.form)
                     return render_template("books/book_add.html", form=book_form)
+
                 addBookOverForm(book_form=book_form, db=db)
                 return  redirect(url_for('books.index'))
             else:
                 print(book_form.errors)
-                flash("Form validation failed.")
+                flash("Fehler beim Speichern: Autor und Titel sind Pflichtfelder.")
+                book_form = BookForm(request.form)
         return render_template("books/book_add.html", form=book_form)
 
 

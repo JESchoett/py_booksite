@@ -3,14 +3,14 @@
 - Anzeige nur der nicht versteckten Bücher #books {cm:2025-05-19}
 - Anlegen eines neuen Buchs #books {cm:2025-05-19}
 - Bestehendes Buch ändern #books
+  - Kann ich evtl. die Komplett löschen und nur `book_add.html` verwenden? #books
   - Aufnahme aller felder #books
   - Bild bei Anpassung aus der Datenbank löschen #books
   - ISBN Fetch einbauen #books
 - Buch löschen #books #check {cm:2025-05-20}
 - Buchseiten Styling & Inhalt #books
   - `book_overview.html` – Layout und Anzeige prüfen
-    Kann ich evtl. die Komplett löschen und nur `book_add.html` verwenden?
-  - `book_add.html` – Alle Felder vorhanden? Buttons/Validierung prüfen
+  - `book_add.html` – Alle Felder vorhanden? Buttons/Validierung prüfen {cm:2025-06-28}
     - bild vom rechner hochladen {cm:2025-06-28}
   - `book_details.html` – Alle Felder anzeigen, inkl. Bildanzeige
     - alle felder

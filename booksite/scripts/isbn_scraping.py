@@ -123,9 +123,6 @@ def save_cover():
     except Exception as e:
         print("Error extracting img:", e)
 
-    except Exception as e:
-        print("Error:", e)
-
 
 def data_cleanup():
     try:
@@ -188,8 +185,8 @@ def get_ISBN_data(ISBN):
 
 
 #Testdata:
-book_data = get_ISBN_data("978-3-608-98701-0")
-print(book_data)
+#book_data = get_ISBN_data("978-3-608-98701-0")
+#print(book_data)
 #
 ##visual test of get_ISBN_data
 #for key, value in book_data.items():

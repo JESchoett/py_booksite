@@ -100,6 +100,10 @@ def book_add():
                 addBookOverForm(book_form=book_form, db=db)
                 return  redirect(url_for('books.index'))
             else:
+                # If an img is given: keep that img
+                if book_form.bildCoverInput.data:
+                    save_cover(book_form.bildCoverInput.data)
+
                 print(book_form.errors)
                 flash("Fehler beim Speichern: Autor und Titel sind Pflichtfelder.")
                 book_form = BookForm(request.form)

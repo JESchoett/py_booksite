@@ -21,22 +21,36 @@ def get_book_info_by_isbn(isbn):
         response.raise_for_status()
 
         data = response.json()
+        return_data = {}
+        # TODO prüfe alle return daten auf interessante Informationen
         if data and 'items' in data:
-            book_data = data['items'][0]['volumeInfo']
+            for item in data['items']:
+                if item["volumeInfo"].get("title") and not return_data.get("titl"):
+                    return_data["titl"] = item["volumeInfo"]["title"]
 
-            # TODO prüfe alle return daten auf interessante Informationen
-            title = book_data.get('title')
-            authors = book_data.get('authors')
-            published_date = book_data.get('publishedDate')
+                if item["volumeInfo"].get("subtitle"):
+                    if not return_data.get("subtitle"):
+                        return_data["subtitle"] = item["volumeInfo"]["subtitle"]
+                    else:
+                        return_data["subtitle"] += item["volumeInfo"]["subtitle"]
 
-            return {
-                "title": title,
-                "authors": authors,
-                "publishedDate": published_date
-            }
+                if item["volumeInfo"].get("authors") and not return_data.get("autor"):
+                    return_data["autor"] = item["volumeInfo"]["authors"]
+
+                if item["volumeInfo"].get("publishedDate") and not return_data.get("jahr"):
+                    return_data["jahr"] = item["volumeInfo"]["publishedDate"][:4]
+
+                if item["volumeInfo"].get("pageCount") and not return_data.get("seiten"):
+                    return_data["seiten"] = item["volumeInfo"]["pageCount"]
+
+                if item["volumeInfo"].get("previewLink") and not return_data.get("url"):
+                    return_data["url"] = item["volumeInfo"]["previewLink"]
+
         else:
             print(f"ISBN {isbn} not in Google Book API.")
             return (f"Kein Buch mit der ISBN {isbn} gefunden.")
+
+        return return_data
 
     except requests.exceptions.RequestException as e:
         print(f"Fehler bei der API-Anfrage: {e}")

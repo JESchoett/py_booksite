@@ -9,7 +9,7 @@
     <div class="container">
         <form method="POST" enctype="multipart/form-data" action="{{ url_for('books.book_add') }}">
             {{ form.hidden_tag() }}
-            
+
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="isbn" class="col-md-4">ISBN</label>
@@ -43,7 +43,7 @@
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="bildName" class="col-md-4">Bild</label>
                     <div class="col-md-8">
-                        <img id="bildCover" src="{{ url_for('static', filename='defaultCover.png') }}" alt="Book Image" class="img-fluid">
+                        <img id="bildCover" src="{{ url_for('static', filename=cover_filename) }}" alt="Book Image" class="img-fluid">
                         <input type="file" class="form-control-file" id="bildCoverInput" name="bildCoverInput" accept="image/*">
                         <input type="text" class="form-control" id="bildName" name="bildName" value="{{ form.bildName.data or '' }}" placeholder="Bild Name">
                     </div>

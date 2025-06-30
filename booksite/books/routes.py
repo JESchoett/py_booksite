@@ -10,6 +10,7 @@ from booksite.books.bookForm import BookForm
 from booksite.scripts.isbn_scraping import get_ISBN_data
 from booksite.scripts.cover_file_manager import save_cover, move_file, remove_file
 
+import os
 
 books = Blueprint('books', __name__, template_folder='templates')
 
@@ -32,7 +33,6 @@ def addBookOverForm(book_form, db):
                 subgenreRomane=book_form.subgenreRomane.data,
                 format=book_form.format.data,
                 verlag=book_form.verlag.data,
-                laenge=book_form.laenge.data,
                 isbn=book_form.isbn.data,
                 jahr=book_form.jahr.data,
                 preis=book_form.preis.data,
@@ -56,7 +56,6 @@ def alterBookOverForm(book, book_form, db):
     book.subgenreRomane = book_form.subgenreRomane.data
     book.format = book_form.format.data
     book.verlag = book_form.verlag.data
-    book.laenge = book_form.laenge.data
     book.isbn = book_form.isbn.data
     book.jahr = book_form.jahr.data
     book.preis = book_form.preis.data
@@ -81,21 +80,28 @@ def book_add():
     else:
         book_form = BookForm()
         if request.method == 'GET':
-            return render_template("books/book_add.html", form=book_form)
+            cover_filename = 'defaultCover.png'
+            return render_template("books/book_add.html", form=book_form, cover_filename=cover_filename)
         elif request.method == 'POST':
             # Use CombinedMultiDict to allow file download
             book_form = BookForm(CombinedMultiDict([request.form, request.files]))
 
+            # If no cover is given, use the default cover, else use the tempCover.png
+            cover_filename = 'defaultCover.png'
+
             if book_form.validate_on_submit():
                 return_value = "Saving the user Input"
                 if book_form.bildCoverInput.data:
-                    save_cover(book_form.bildCoverInput.data)
-                    return_value = move_file(book_form.bildName.data)  #TODO: No name is getting passed
+                    cover_filename = 'tempCover.png'
+
+                    return_value = save_cover(book_form.bildCoverInput.data)
+                    if return_value == 0:
+                        return_value = move_file(book_form.bildName.data)
 
                 if return_value != 0:
                     flash(f"{return_value}")
                     book_form = BookForm(request.form)
-                    return render_template("books/book_add.html", form=book_form)
+                    return render_template("books/book_add.html", form=book_form, cover_filename=cover_filename)
 
                 addBookOverForm(book_form=book_form, db=db)
                 return  redirect(url_for('books.index'))
@@ -103,11 +109,12 @@ def book_add():
                 # If an img is given: keep that img
                 if book_form.bildCoverInput.data:
                     save_cover(book_form.bildCoverInput.data)
+                    cover_filename = 'tempCover.png'
 
                 print(book_form.errors)
                 flash("Fehler beim Speichern: Autor und Titel sind Pflichtfelder.")
                 book_form = BookForm(request.form)
-        return render_template("books/book_add.html", form=book_form)
+        return render_template("books/book_add.html", form=book_form, cover_filename=cover_filename)
 
 
 @books.route('/book_details/<nummer>', methods=['GET', 'POST'])

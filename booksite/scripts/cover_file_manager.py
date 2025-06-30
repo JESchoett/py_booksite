@@ -1,6 +1,6 @@
 import os
 import shutil
-import urllib.request
+import time
 
 # Save the uploaded cover image to a temporary file
 # This is done, to be able to keep the image in case of an error
@@ -29,7 +29,8 @@ def move_file(new_name):
     # Ensure the destination directory exists
     os.makedirs(dest_dir, exist_ok=True)
     if os.path.isfile(dest_path):
-        return "file name already exists"
+        # If the file already exists, rename it with a timestamp
+        dest_path = os.path.join(dest_dir, f"{new_name}_{int(time.time())}.png")
 
     # Move and rename the file
     if os.path.isfile(src_path):

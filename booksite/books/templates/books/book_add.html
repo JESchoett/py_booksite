@@ -43,9 +43,15 @@
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="bildName" class="col-md-4">Bild</label>
                     <div class="col-md-8">
-                        <img id="bildCover" src="{{ url_for('static', filename=cover_filename) }}" alt="Book Image" class="img-fluid">
-                        <input type="file" class="form-control-file" id="bildCoverInput" name="bildCoverInput" accept="image/*">
-                        <input type="text" class="form-control" id="bildName" name="bildName" value="{{ form.bildName.data or '' }}" placeholder="Bild Name">
+                        <div class="mb-1">
+                            <img id="bildCover" src="{{ url_for('static', filename=cover_filename) }}" alt="Book Image" class="img-fluid">
+                        </div>
+                        <div class="mb-1">
+                            <input type="text" class="form-control" id="bildName" name="bildName" value="{{ form.bildName.data or '' }}" placeholder="Bild Name">
+                        </div>
+                        <div class="mb-1">
+                            <input type="file" class="form-control form-control-sm pb-1" id="bildCoverInput" name="bildCoverInput" accept="image/*">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -146,10 +152,12 @@
                 </div>
             </div>
 
-            <!-- Submit Button -->
             <div class="row mt-3">
                 <div class="form-group col-6">
                     <button type="submit" class="btn btn-primary btn-block">Buch Hinzufügen</button>
+                </div>
+                <div class="col-6">
+                    <button id="clearButton" class="btn btn-danger btn-block">Clear Form</button>
                 </div>
             </div>
         </form>
@@ -384,6 +392,17 @@
             };
             reader.readAsDataURL(file);
         }
+    });
+
+
+    document.getElementById('clearButton').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent form submission
+        const form = this.closest('form');
+        if (form) {
+            form.reset();
+        }
+        // Clear image preview if needed
+        document.getElementById('bildCover').src = "{{ url_for('static', filename=cover_filename) }}";
     });
 
 </script>

@@ -8,6 +8,10 @@
 <div class="jumbotron">
     <div class="container">
         <form method="POST" enctype="multipart/form-data" action="{{ url_for('books.book_add') }}">
+            <div class="row">
+                <h1>Anlage eines Buches</h1>
+            </div>
+
             {{ form.hidden_tag() }}
 
             <div class="row">
@@ -154,7 +158,7 @@
 
             <div class="row mt-3">
                 <div class="form-group col-6">
-                    <button type="submit" class="btn btn-primary btn-block">Buch Hinzufügen</button>
+                    <button type="Einfügen" class="btn btn-primary btn-block">Buch Hinzufügen</button>
                 </div>
                 <div class="col-6">
                     <button id="clearButton" class="btn btn-danger btn-block">Clear Form</button>

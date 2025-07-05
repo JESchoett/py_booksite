@@ -124,8 +124,16 @@ def book_add():
 def book_details(nummer):
     book = Book.query.filter(Book.nummer == nummer).first()
     book_form = BookForm(obj=book)
+    book_form.bildName.data = book.bild
+    cover_filename = book.bild if book.bild else 'defaultCover.png'
+
+    dest_path = os.path.join('booksite', 'static', 'cover', cover_filename)
+    if not os.path.isfile(dest_path):
+        flash("Fehler beim Laden des Covers: Datei nicht gefunden.")
+    print(dest_path)
+
     if request.method == 'GET':
-        return render_template('books/book_details.html', book=book, form=book_form)
+        return render_template('books/book_details.html', book=book, form=book_form, cover_filename=cover_filename)
     elif request.method == 'POST':
         if book:
             alterBookOverForm(book=book, book_form=book_form, db=db)

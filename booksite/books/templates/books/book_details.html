@@ -7,157 +7,152 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Buch Details</h1>
 
         <!-- Start of the form -->
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <h1>Anzeige eines Buches</h1>
+            </div>
             {{ form.hidden_tag() }}
 
             <div class="row">
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="autor" class="col-md-4">{{ form.autor.label(class="form-label") }}</label>
+                    <label for="isbn" class="col-md-4">ISBN</label>
                     <div class="col-md-8">
-                        {{ form.autor(class="form-control") }}
+                        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ form.isbn.data or '' }}" placeholder="Keine ISBN hinterlegt">
+                    </div>
+                <div id="loadingSpinner" class=" spinner-border text-primary" role="status" style="display: none;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="titel" class="col-md-4">Titel</label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="titel" name="titel" rows="5" value="{{ form.titel.data or '' }}" placeholder="Es muss ein Titel eingegeben werden!"></textarea>
                     </div>
                 </div>
+                <div class="col-md-6 d-flex align-items-center mb-3">
+                    <label for="bildName" class="col-md-4">Bild</label>
+                    <div class="col-md-8">
+                        <img id="bildCover" src="{{ url_for('static', filename='cover/' ~ cover_filename) }}" alt="Book Image" class="img-fluid mb-2">
+                        <div class="mb-1">
+                            <input type="text" class="form-control" id="bildName" name="bildName" value="{{ form.bildName.data or '' }}" placeholder="Bild Name">
+                        </div>
+                        <div class="mb-1">
+                            <input type="file" class="form-control form-control-sm pb-1" id="bildCoverInput" name="bildCoverInput" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="titel" class="col-md-4">{{ form.titel.label(class="form-label") }}</label>
+                    <label for="autor" class="col-md-4">Autor</label>
                     <div class="col-md-8">
-                        {{ form.titel(class="form-control") }}
+                        <input type="text" class="form-control" id="autor" name="autor" value="{{ form.autor.data or '' }}" placeholder="Es muss ein Autor eingegeben werden!">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="genre" class="col-md-4">{{ form.genre.label(class="form-label") }}</label>
+                    <label for="genre" class="col-md-4">Genre</label>
                     <div class="col-md-8">
-                        {{ form.genre(class="form-control") }}
+                        <input type="text" class="form-control" id="genre" name="genre" value="{{ form.genre.data or '' }}" placeholder="Kein Genre hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="subgenreRomane" class="col-md-4">{{ form.subgenreRomane.label(class="form-label") }}</label>
+                    <label for="format" class="col-md-4">Format</label>
                     <div class="col-md-8">
-                        {{ form.subgenreRomane(class="form-control") }}
+                        <input type="text" class="form-control" id="format" name="format" value="{{ form.format.data or '' }}" placeholder="Kein Format hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="format" class="col-md-4">{{ form.format.label(class="form-label") }}</label>
+                    <label for="verlag" class="col-md-4">Verlag</label>
                     <div class="col-md-8">
-                        {{ form.format(class="form-control") }}
+                        <input type="text" class="form-control" id="verlag" name="verlag" value="{{ form.verlag.data or '' }}" placeholder="Kein Verlag hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="verlag" class="col-md-4">{{ form.verlag.label(class="form-label") }}</label>
+                    <label for="seiten" class="col-md-4">Seiten Anzahl</label>
                     <div class="col-md-8">
-                        {{ form.verlag(class="form-control") }}
+                        <input type="text" class="form-control" id="seiten" name="seiten" value="{{ form.seiten.data or '' }}" placeholder="Keine Seiten Anzahl hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="seiten" class="col-md-4">{{ form.seiten.label(class="form-label") }}</label>
+                    <label for="preis" class="col-md-4">Preis</label>
                     <div class="col-md-8">
-                        {{ form.seiten(class="form-control") }}
+                        <input type="number" class="form-control" id="preis" name="preis" step="0.01" value="{{ form.preis.data or '' }}" placeholder="Kein Preis hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="isbn" class="col-md-4">{{ form.isbn.label(class="form-label") }}</label>
+                    <label for="jahr" class="col-md-4">Erscheinungsjahr</label>
                     <div class="col-md-8">
-                        {{ form.isbn(class="form-control") }}
+                        <input type="number" class="form-control" id="jahr" name="jahr" value="{{ form.jahr.data or '' }}" placeholder="Kein Erscheinungsjahr hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="jahr" class="col-md-4">{{ form.jahr.label(class="form-label") }}</label>
+                    <label for="standort" class="col-md-4">Standort</label>
                     <div class="col-md-8">
-                        {{ form.jahr(class="form-control") }}
+                        <input type="text" class="form-control" id="standort" name="standort" value="{{ form.standort.data or '' }}" placeholder="Kein Standort hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="preis" class="col-md-4">{{ form.preis.label(class="form-label") }}</label>
+                    <label for="subtitel" class="col-md-4">Subtitel</label>
                     <div class="col-md-8">
-                        {{ form.preis(class="form-control") }}
+                        <input type="text" class="form-control" id="subtitel" name="subtitel" value="{{ form.subtitel.data or '' }}" placeholder="Kein Subtitel hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="standort" class="col-md-4">{{ form.standort.label(class="form-label") }}</label>
+                    <label for="subgenreRomane" class="col-md-4">Subgenre Romane</label>
                     <div class="col-md-8">
-                        {{ form.standort(class="form-control") }}
+                        <input type="text" class="form-control" id="subgenreRomane" name="subgenreRomane" value="{{ form.subgenreRomane.data or '' }}" placeholder="Kein Subgenre Romane hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="bemerkungen" class="col-md-4">{{ form.bemerkungen.label(class="form-label") }}</label>
+                    <label for="subgenreSachbuchRatgeber" class="col-md-4">Subgenre Sachbuch/Ratgeber</label>
                     <div class="col-md-8">
-                        {{ form.bemerkungen(class="form-control") }}
+                        <input type="text" class="form-control" id="subgenreSachbuchRatgeber" name="subgenreSachbuchRatgeber" value="{{ form.subgenreSachbuchRatgeber.data or '' }}" placeholder="Kein Subgenre Sachbuch/Ratgeber hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="subtitel" class="col-md-4">{{ form.subtitel.label(class="form-label") }}</label>
+                    <label for="subgenreRatgeber" class="col-md-4">Subgenre Ratgeber</label>
                     <div class="col-md-8">
-                        {{ form.subtitel(class="form-control") }}
+                        <input type="text" class="form-control" id="subgenreRatgeber" name="subgenreRatgeber" value="{{ form.subgenreRatgeber.data or '' }}" placeholder="Kein Subgenre Ratgeber hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="subgenreSachbuchRatgeber" class="col-md-4">{{ form.subgenreSachbuchRatgeber.label(class="form-label") }}</label>
+                    <label for="auflage" class="col-md-4">Auflage</label>
                     <div class="col-md-8">
-                        {{ form.subgenreSachbuchRatgeber(class="form-control") }}
+                        <input type="text" class="form-control" id="auflage" name="auflage" value="{{ form.auflage.data or '' }}" placeholder="Keine Auflage hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="subgenreRatgeber" class="col-md-4">{{ form.subgenreRatgeber.label(class="form-label") }}</label>
+                    <label for="schlagw" class="col-md-4">Schlagwort</label>
                     <div class="col-md-8">
-                        {{ form.subgenreRatgeber(class="form-control") }}
+                        <input type="text" class="form-control" id="schlagw" name="schlagw" value="{{ form.schlagw.data or '' }}" placeholder="Kein Schlagwort hinterlegt">
                     </div>
                 </div>
-
                 <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="auflage" class="col-md-4">{{ form.auflage.label(class="form-label") }}</label>
+                    <label for="bemerkungen" class="col-md-4">Bemerkungen</label>
                     <div class="col-md-8">
-                        {{ form.auflage(class="form-control") }}
+                        <input type="text" class="form-control" id="bemerkungen" name="bemerkungen" value="{{ form.bemerkungen.data or '' }}" placeholder="Keine Bemerkungen hinterlegt">
                     </div>
                 </div>
-
-                <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="schlagw" class="col-md-4">{{ form.schlagw.label(class="form-label") }}</label>
-                    <div class="col-md-8">
-                        {{ form.schlagw(class="form-control") }}
-                    </div>
-                </div>
-
-                <div class="col-md-6 d-flex align-items-center mb-3">
-                    <label for="bild" class="col-md-4">{{ form.bildName.label(class="form-label") }}</label>
-                    <div class="col-md-8">
-                        {{ form.bildName(class="form-control") }}
-                    </div>
-                </div>
-
-                <!-- Inhaltsangabe with correct text wrapping -->
                 <div class="col-md-12 d-flex align-items-start mb-3">
-                    <label for="inhaltsangabe" class="col-md-2">{{ form.inhaltsangabe.label(class="form-label") }}</label>
+                    <label for="inhaltsangabe" class="col-md-2">Inhaltsangabe</label>
                     <div class="col-md-10">
-                        <!-- Manually added textarea with wrapping and custom height -->
-                        <textarea class="form-control" name="inhaltsangabe" id="inhaltsangabe" rows="5" style="height: 150px;" wrap="soft">{{ form.inhaltsangabe.data }}</textarea>
+                        <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" value="{{ form.inhaltsangabe.data or '' }}" placeholder="Keine Inhaltsangabe hinterlegt"></textarea>
                     </div>
                 </div>
 
                 <div class="row mt-3">
-                    <div class="form-group col-6">
-                        {{ form.submit(class="btn btn-primary btn-block submit-button") }}
+                    <div class="form-group col-8">
+                        <button type=""action="{{ url_for('books.index') }}" class="btn btn-secondary btn-block" id="back">Zurück zur Übersicht</button>
                     </div>
-                    <!-- Delete button -->
                     <div class="form-group col-6">
-                        <button class="btn btn-danger btn-block" onclick="deleteBook({{ book['nummer'] }})">
-                            Löschen
-                        </button>
+                        <button type="Einfügen" class="btn btn-primary btn-block">Änderung des Buches</button>
+                    </div>
+                    <div class="form-group col-6">
+                        <button class="btn btn-danger btn-block" onclick="deleteBook({{ book['nummer'] }})">Löschen</button>
                     </div>
                 </div>
             </div>

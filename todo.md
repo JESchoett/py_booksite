@@ -2,7 +2,7 @@
 - Anzeige aller Bücher {cm:2025-05-19}
 - Anzeige nur der nicht versteckten Bücher  {cm:2025-05-19}
 - Anlegen eines neuen Buchs {cm:2025-05-19}
-- Bestehendes Buch ändern
+- Bestehendes Buch ändern {cm:2025-07-05}
 - Buch löschen   {cm:2025-05-20}
 
 
@@ -11,14 +11,17 @@
   - `book_add.html` – Alle Felder vorhanden? Buttons/Validierung prüfen {cm:2025-06-28}
     - bild vom rechner hochladen {cm:2025-06-28}
   - `book_details.html` – Alle Felder anzeigen, inkl. Bildanzeige
-    - alle felder
+    - alle felder {cm:2025-07-05}
+    - Titel wird gelöscht! #TODO
+    - Return Button oben und unten im html #TODO
     - styling, wie beim book `book_add.html`
-    - funktionen (Anpassung und Löschung)
+    - funktionen 
+      - Anpassung {cm:2025-07-05}
+      - Löschung {cm:2025-07-05}
+      - Fetch von ISBN Daten
   - `book_breadcrumb.html` – Pfadnavigation prüfen
 - `bookForm.py` prüfen: Validierungen & Defaults   {cm:2025-06-29}
 - `routes.py` prüfen: Fehlerbehandlung, Redirects {cm:2025-06-30}
-  - bei book_add daten einer Bookform behalten, sollte ich auf einen Fehler laufen  {cm:2025-06-30}
-  - sollten die `addBookOverForm` oder `alterBookOverForm` auf fehler laufen, sollte das Bild der Speicherung gelöscht werden {cm:2025-06-29}
 - `models.py` prüfen: Felder konsistent mit Formularen?  {cm:2025-07-01}
 
 # 🎬 Filme-Funktionen

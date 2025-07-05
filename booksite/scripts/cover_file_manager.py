@@ -18,28 +18,33 @@ def save_cover(cover_img_flaskobject):
 
 # Move the scraped img to the /booksite/static/cover folder
 def move_file(new_name):
+    new_name = new_name.replace(" ", "_")
+
+    if new_name[-4:] not in ['.jpg', 'jpeg', '.png']:
+        new_name += ".png"
+
     # Define paths
     src_path = os.path.join('booksite', 'static', 'tempCover.png')
     dest_dir = os.path.join('booksite', 'static', 'cover')
-    dest_path = os.path.join(dest_dir, new_name)
-
-    if not dest_path.endswith(".png"):
-        dest_path += ".png"
-
     # Ensure the destination directory exists
     os.makedirs(dest_dir, exist_ok=True)
+
+    dest_path = os.path.join(dest_dir, new_name)
     if os.path.isfile(dest_path):
         # If the file already exists, rename it with a timestamp
-        dest_path = os.path.join(dest_dir, f"{new_name}_{int(time.time())}.png")
+        new_name = f"{new_name[:-4]}_{int(time.time())}{new_name[-4:]}"
+        new_name = new_name.replace(" ", "_")
+
+    dest_path = os.path.join(dest_dir, new_name)
 
     # Move and rename the file
     if os.path.isfile(src_path):
         try:
             shutil.move(src_path, dest_path)
-            return 0
+            return 0, new_name
         except Exception as e:
             return str(e)
-    return "no file to move"
+    return 400, "no file to move"
 
 # Remove the file from the /booksite/static/cover folder
 def remove_file(file_name):

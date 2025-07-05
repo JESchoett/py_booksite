@@ -96,7 +96,9 @@ def book_add():
 
                     return_value = save_cover(book_form.bildCoverInput.data)
                     if return_value == 0:
-                        return_value = move_file(book_form.bildName.data)
+                        return_value, book_form.bildName.data = move_file(book_form.bildName.data)
+                else:
+                    return_value = 0
 
                 if return_value != 0:
                     flash(f"{return_value}")

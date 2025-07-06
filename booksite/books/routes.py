@@ -106,7 +106,7 @@ def book_add():
                     return render_template("books/book_add.html", form=book_form, cover_filename=cover_filename)
 
                 addBookOverForm(book_form=book_form, db=db)
-                return  redirect(url_for('books.index'))
+                return redirect(url_for('books.index'))
             else:
                 # If an img is given: keep that img
                 if book_form.bildCoverInput.data:
@@ -135,8 +135,9 @@ def book_details(nummer):
     if request.method == 'GET':
         return render_template('books/book_details.html', book=book, form=book_form, cover_filename=cover_filename)
     elif request.method == 'POST':
-        if book:
-            alterBookOverForm(book=book, book_form=book_form, db=db)
+        if book_form.validate_on_submit():
+            if book:
+                alterBookOverForm(book=book, book_form=book_form, db=db)
         return redirect(url_for('core.index'))
 
 @books.route('/book_delete/<nummer>', methods=['DELETE'])

@@ -5,17 +5,24 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>Welcome {{ user }}</h1>
-		<p>Private Bücherreiseite</p>
+		<p>Befülle hier deine private Bücherei!</p>
 	</div>
 
 	<div class="container">
-		<a class="btn btn-primary btn-lg" href=" {{ url_for('books.index') }} ">Buch Übersicht</a>
-		<a class="btn btn-primary btn-lg" href=" {{ url_for('books.book_add') }} ">Buch Anlegen</a>
-	</div>
-	<br>
-	<div class="container">
-		<a class="btn btn-primary btn-lg" href=" {{ url_for('movies.index') }} ">Film Übersicht</a>
-		<a class="btn btn-primary btn-lg" href=" {{ url_for('movies.movies_add') }} ">Film Anlegen</a>
+		<div class="row g-3"> <!-- g-3 adds vertical and horizontal spacing -->
+			<div class="col-12 col-md-6">
+			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('books.index') }}">Buch Übersicht</a>
+			</div>
+			<div class="col-12 col-md-6">
+			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('books.book_add') }}">Buch anlegen</a>
+			</div>
+			<div class="col-12 col-md-6">
+			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('movies.index') }}">Film Übersicht</a>
+			</div>
+			<div class="col-12 col-md-6">
+			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('movies.movies_add') }}">Film anlegen</a>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}

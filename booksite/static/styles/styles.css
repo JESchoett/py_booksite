@@ -7,23 +7,55 @@
     background-color: lightgray;
 }
 
-body {
-    margin: 4%;
+body{
+    margin: 5%;
+}
+
+.content {
+    margin: 10%;
     background-color: white;
 }
 
-nav {
-    background-color: #05772b;
+.custom-navbar {
+    background-color: #4c6c42;
+
 }
 
-.nav-text {
-    color: #f0efeb;
-    font-weight: bolder;
+
+.navbar-brand-icon{
+    height: 1.5rem;
+    margin-right: 1rem;
+}
+
+#mynavbar .navbar-nav .nav-link {
+    color: white;
+}
+
+
+h1 {
+    margin-bottom: 24px;
 }
 
 .btn-primary {
-    background-color: #091581;
+    background-color: #2e5f40 !important;
+    border: none !important;
+    float: right;
 }
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+     background-color:#3f8a5b!important;
+}
+
+.btn-secondary {
+    background-color: #b7924a!important;
+}
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+     background-color:#ddc166!important;
+}
+
 .btn-gruppe {
     color: #f0efeb;
     border-radius: 10em;
@@ -33,6 +65,7 @@ nav {
 .submit-button:hover {
     text-decoration: underline;
 }
+
 
 #coverBild, #previewCoverBild {
        max-width: 100px;

@@ -31,9 +31,13 @@ body{
     color: white;
 }
 
+#mynavbar .navbar-nav .nav-link:hover, .nav-link:focus, .nav-link:active{
+    color: #b5c4ab ;
+}
+
 
 h1 {
-    margin-bottom: 24px;
+    margin-bottom: 24px !important;
 }
 
 .btn-primary {
@@ -49,11 +53,13 @@ h1 {
 
 .btn-secondary {
     background-color: #b7924a!important;
+    border: none !important;
 }
 .btn-secondary:hover,
 .btn-secondary:focus,
 .btn-secondary:active {
      background-color:#ddc166!important;
+     border: none !important;
 }
 
 .btn-gruppe {
@@ -75,3 +81,23 @@ h1 {
        display: block;
        margin-top: 8px;
 }
+
+.jumbotron {
+    background-color: #e4e3e0 !important;
+}
+
+#add-book-button {
+    float: end;
+    font-size: large;
+
+}
+
+
+.jumbotron {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+/*#fetchBookData{
+    background-color: #b5c4ab;
+}*/

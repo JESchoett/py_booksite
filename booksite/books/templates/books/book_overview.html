@@ -3,9 +3,8 @@
 
 
 {% block content %}
-<!--{% include 'books/book_breadcrumb.html' %}-->
 
-<div class="jumbotron">
+    <div class="table-responsive">
         <table id="bookTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -14,7 +13,7 @@
                     <th>Subtitel</th>
                     <th>Autor</th>
                     <th>Genre</th>
-                    <th>Schlagwoerter</th>
+                    <th>Schlagwörter</th>
                     <th>Verlag</th>
                     <th>Jahr</th>
                     <th>Format</th>
@@ -38,7 +37,7 @@
                 {% endfor %}
             </tbody>
         </table>
-</div>
+    </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

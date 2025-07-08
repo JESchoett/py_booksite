@@ -1,11 +1,7 @@
 from flask import render_template, redirect, url_for, Blueprint, flash, session
 from flask_login import current_user
 
-import datetime
-
-
 core = Blueprint('core', __name__, template_folder='templates')
-
 
 @core.route('/')
 def index():

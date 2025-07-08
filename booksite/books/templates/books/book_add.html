@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
-{% block title %}Bücher Anlegen{% endblock %}
+{% block title %}Buch Anlegen{% endblock %}
 
 {% block content %}
-
- <h1>Neues Buch anlegen</h1>
  
 <div class="jumbotron">
  
         <form method="POST" enctype="multipart/form-data" action="{{ url_for('books.book_add') }}">
+            <div class="row">
+                <h1>Neues Buch anlegen</h1>
+            </div>
 
             {{ form.hidden_tag() }}
 

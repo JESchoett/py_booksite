@@ -29,7 +29,7 @@
                 <div class="col-md-6 d-flex align-items-center mb-3">
                     <label for="titel" class="col-md-4">Titel</label>
                     <div class="col-md-8">
-                        <textarea class="form-control" id="titel" name="titel" rows="5" value="{{ form.titel.data or '' }}" placeholder="Es muss ein Titel eingegeben werden!"></textarea>
+                        <textarea class="form-control" id="titel" name="titel" rows="5" placeholder="Es muss ein Titel eingegeben werden!">{{ form.titel.data or '' }}</textarea>
                     </div>
                 </div>
                 <div class="col-md-6 d-flex align-items-center mb-3">
@@ -139,7 +139,7 @@
                 <div class="col-md-12 d-flex align-items-start mb-3">
                     <label for="inhaltsangabe" class="col-md-2">Inhaltsangabe</label>
                     <div class="col-md-10">
-                        <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" value="{{ form.inhaltsangabe.data or '' }}" placeholder="Keine Inhaltsangabe hinterlegt"></textarea>
+                        <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" placeholder="Keine Inhaltsangabe hinterlegt">{{ form.inhaltsangabe.data or '' }}</textarea>
                     </div>
                 </div>
 

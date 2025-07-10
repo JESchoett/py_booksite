@@ -17,7 +17,7 @@ body{
 }
 
 .custom-navbar {
-    background-color: #4c6c42;
+    background-color: rgb(76, 108, 66);
 
 }
 
@@ -82,9 +82,7 @@ h1 {
        margin-top: 8px;
 }
 
-.jumbotron {
-    background-color: #e4e3e0 !important;
-}
+  
 
 #add-book-button {
     float: end;
@@ -94,6 +92,7 @@ h1 {
 
 
 .jumbotron {
+    background-color: #e4e3e0 !important;
     padding-top: 32px;
     padding-bottom: 32px;
 }
@@ -101,3 +100,21 @@ h1 {
 /*#fetchBookData{
     background-color: #b5c4ab;
 }*/
+
+
+/*change focus ring colour for tab navigation*/
+.btn-primary:focus,
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem #43a71c80 !important; 
+}
+
+
+/*styling for overview tables*/
+.title-table a{
+    color: #2e5f40;
+}
+
+.table-nr a{
+    color: #2e5f40;
+}

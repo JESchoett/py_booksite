@@ -45,7 +45,22 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DataTable initialized");
-    new DataTable('#bookTable');
+    new DataTable('#bookTable', {
+        language: {
+            lengthMenu: "Einträge pro Seite:&nbsp;&nbsp; _MENU_",
+            zeroRecords: "Keine passenden Einträge gefunden",
+            info: "Zeige _START_ bis _END_ von _TOTAL_ Einträgen",
+            infoEmpty: "Keine verfügbaren Einträge",
+            infoFiltered: "(gefiltert von insgesamt _MAX_ Einträgen)",
+            search: "Suchen:",
+            paginate: {
+                first: "Erste",
+                last: "Letzte",
+                next: "Nächste",
+                previous: "Vorherige"
+            }
+        }
+    });
 });
 </script>
 

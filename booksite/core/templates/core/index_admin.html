@@ -1,28 +1,38 @@
 {% extends "base.html" %}
 {% block title %}Bibliothek Schött{% endblock %}
 {% block content %}
-<!--Using Boostrap classes for styling here-->
-<div class="jumbotron">
-	<div class="container">
-		<h1>Hallo {{ user }}</h1>
-		<p>Befülle hier deine private Bücherei!</p>
-	</div>
 
-	<div class="container">
-		<div class="row g-3"> <!-- g-3 adds vertical and horizontal spacing -->
-			<div class="col-12 col-md-6">
-			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('books.index') }}">Buch Übersicht</a>
-			</div>
-			<div class="col-12 col-md-6">
-			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('books.book_add') }}">Buch anlegen</a>
-			</div>
-			<div class="col-12 col-md-6">
-			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('movies.index') }}">Film Übersicht</a>
-			</div>
-			<div class="col-12 col-md-6">
-			<a class="btn btn-primary btn-lg w-100" href="{{ url_for('movies.movies_add') }}">Film anlegen</a>
-			</div>
-		</div>
-	</div>
+<h1>Hallo {{ user }}</h1>
+
+<div class="card shadow-lg p-5 rounded-4">
+	<h2>Meine Bibliothek</h2>
+	<p class="card-text">Deine private Bibliothek beinhaltet alle Bücher, die bereits hinzugefügt wurden.</p>
+	<a class="btn btn-primary btn-lg d-flex justify-content-between align-items-center overview-home-button" 
+	href="{{ url_for('books.index') }}">
+		zur Buch-Übersicht 
+		<!--add icon for big screens-->
+		<i class="fas fa-arrow-right d-none d-sm-inline"></i>
+	</a>
+	<p class="card-text">Du findest ein bestimmtes Buch nicht oder willst erst mal deine Bibliothek befüllen? Lege hier neue Bücher an. </p>
+	<a href="{{ url_for('books.book_add') }}" class="btn btn-secondary rounded-circle add-button" aria-label="Buch anlegen" title="Buch anlegen">
+      <i class="fas fa-plus"></i>
+    </a>
 </div>
+
+<div class="card shadow-lg p-5 rounded-4">
+	<h2>Mein Heimkino</h2>
+	<p class="card-text">Deine private Film-Bibliothek beinhaltet alle Filme, die du besitzt.</p>
+	<a class="btn btn-primary btn-lg d-flex justify-content-between align-items-center overview-home-button" 
+	href="{{ url_for('movies.index') }}">
+		zur Film-Übersicht 
+		<!--add icon for big screens-->
+		<i class="fas fa-arrow-right d-none d-sm-inline"></i>
+	</a>
+	<p class="card-text">Du kennst einen Film den du in deinem Heimkino nicht findest? Lege hier neue Filme an. </p>
+	<a href="{{ url_for('movies.movies_add') }}" class="btn btn-secondary rounded-circle add-button" aria-label="Film anlegen" title="Film anlegen">
+      <i class="fas fa-plus"></i>
+    </a>
+
+</div>
+
 {% endblock %}

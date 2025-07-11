@@ -1,14 +1,10 @@
-.dataTables_filter {
-    float: left !important;
+/*general*/
+h1 {
+    margin-bottom: 24px !important;
 }
-
 
 .component {
     background-color: lightgray;
-}
-
-body{
-    margin: 5%;
 }
 
 .content {
@@ -16,11 +12,11 @@ body{
     background-color: white;
 }
 
+/*nav bar*/
 .custom-navbar {
     background-color: rgb(76, 108, 66);
 
 }
-
 
 .navbar-brand-icon{
     height: 1.5rem;
@@ -35,11 +31,13 @@ body{
     color: #b5c4ab ;
 }
 
-
-h1 {
-    margin-bottom: 24px !important;
+.dropdown-menu{
+    --bs-dropdown-link-active-bg: #f7e097;
+    --bs-dropdown-link-active-color: #000;
 }
 
+
+/*buttons*/
 .btn-primary {
     background-color: #2e5f40 !important;
     border: none !important;
@@ -72,6 +70,32 @@ h1 {
     text-decoration: underline;
 }
 
+/*add button on the home page*/
+.add-button {
+  width: 70px;
+  height: 70px;
+  padding: 0;
+  font-size: 1.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+/*add button on the book.add page*/
+#add-book-button {
+    float: end;
+    font-size: large;
+
+}
+
+/*change focus ring colour for tab navigation*/
+.btn-primary:focus,
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem #43a71c80 !important; 
+}
+
 
 #coverBild, #previewCoverBild {
        max-width: 100px;
@@ -82,33 +106,26 @@ h1 {
        margin-top: 8px;
 }
 
-  
-
-#add-book-button {
-    float: end;
-    font-size: large;
+.new-data {
+    background-color: #e7e7e7 !important;
+    padding-top: 7%;
+    padding-bottom: 7%;
+    padding-left: 3%;
+    padding-right: 3%;
+    border-radius: 15px;
 
 }
 
-
-.jumbotron {
-    background-color: #e4e3e0 !important;
-    padding-top: 32px;
-    padding-bottom: 32px;
+.card{
+    margin-bottom: 36px;
 }
-
-/*#fetchBookData{
-    background-color: #b5c4ab;
-}*/
-
-
-/*change focus ring colour for tab navigation*/
-.btn-primary:focus,
-.btn-primary:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 0.25rem #43a71c80 !important; 
+.card-text{
+    margin-top: 24px;
 }
-
+.overview-home-button{
+    width: 70%;
+    margin: 0 auto;
+}
 
 /*styling for overview tables*/
 .title-table a{
@@ -117,4 +134,17 @@ h1 {
 
 .table-nr a{
     color: #2e5f40;
+}
+
+.dataTables_filter {
+    float: left !important;
+}
+
+.pagination {
+  --bs-pagination-color: #3f8a5b;
+  --bs-pagination-active-bg: #3f8a5b;
+  --bs-pagination-active-border-color: #2e5f40;
+
+  --bs-pagination-hover-color: #1AA845;
+  --bs-pagination-focus-color: #1AA845;
 }

@@ -12,6 +12,10 @@ h1 {
     background-color: white;
 }
 
+.form-group {
+    margin-bottom: 1rem;
+}
+
 /*nav bar*/
 .custom-navbar {
     background-color: rgb(76, 108, 66);
@@ -49,15 +53,33 @@ h1 {
      background-color:#3f8a5b!important;
 }
 
-.btn-secondary {
-    background-color: #b7924a!important;
-    border: none !important;
+.btn-secondary{
+    background-color: white;
+    color:  #2e5f40; 
+    border-color:  #2e5f40;
+    border-width: 3px;
+    float: right;
 }
+
 .btn-secondary:hover,
 .btn-secondary:focus,
 .btn-secondary:active {
-     background-color:#ddc166!important;
-     border: none !important;
+    background-color: #b5c4ab;
+    border-color:  #b5c4ab;
+}    
+
+.btn-warn {
+    background-color: #b7924a;
+    border: none;
+    color: white;
+}
+.btn-warn:hover,
+.btn-warn:focus,
+.btn-warn:active {
+     background-color:#ddc166;
+     border: none ;
+     color: white;
+
 }
 
 .btn-gruppe {
@@ -68,6 +90,10 @@ h1 {
 
 .submit-button:hover {
     text-decoration: underline;
+}
+
+#back{
+    width:30%;
 }
 
 /*add button on the home page*/
@@ -86,7 +112,11 @@ h1 {
 #add-book-button {
     float: end;
     font-size: large;
+}
 
+/*einloggen button on login page*/
+#submit{
+    margin-top: 1.5rem;
 }
 
 /*change focus ring colour for tab navigation*/
@@ -108,7 +138,7 @@ h1 {
 
 .new-data {
     background-color: #e7e7e7 !important;
-    padding-top: 7%;
+    padding-top: 5%;
     padding-bottom: 7%;
     padding-left: 3%;
     padding-right: 3%;
@@ -147,4 +177,37 @@ h1 {
 
   --bs-pagination-hover-color: #1AA845;
   --bs-pagination-focus-color: #1AA845;
+}
+
+/*alert*/
+.alert{
+    background-color: #ceeaee;
+    border-bottom-color: #90b1b6;
+    border-left-color: #90b1b6;
+    border-top-color: #90b1b6;
+    border-right-color: #90b1b6;
+}
+
+.btn-info{
+    color: white;
+    background-color:#537B7F;
+    border: none;
+}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+   background-color:#6bc1c9;
+}
+
+/*styling the isbn search*/
+.modal-dialog{
+    margin: 10%;
+}
+
+.modal-body{
+    padding: 32px;
+}
+.modal-title{
+    margin-right: 1rem;
+    font-size: 20px;
 }

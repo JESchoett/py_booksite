@@ -28,7 +28,7 @@
 
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-end mb-3">
-                    <button id="clearButton" class="btn btn-secondary">
+                    <button id="clearButton" class="btn btn-warn">
                         <span class="d-none d-sm-inline ms-2">Alle Eingaben löschen</span>
                          <i class="fa-solid fa-trash"></i>
                     </button>
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="titel">Titel</label>
+                    <label for="titel">Titel*</label>
                     <div>
                         <textarea class="form-control" id="titel" name="titel" rows="5" value="{{ form.titel.data or '' }}" placeholder="Titel"></textarea>
                     </div>
@@ -70,7 +70,7 @@
                     <input type="text" class="form-control" id="subtitel" name="subtitel" value="{{ form.subtitel.data or '' }}" placeholder="Subtitel">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="autor" class="form-label">Autor</label>
+                    <label for="autor" class="form-label">Autor*</label>
                     <input type="text" class="form-control" id="autor" name="autor" value="{{ form.autor.data or '' }}">
                 </div>
                 
@@ -157,13 +157,12 @@
 </div>
 
 
-<div class="modal fade" id="bookPreviewModal" tabindex="-1" role="dialog" aria-labelledby="bookPreviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="bookPreviewModal" tabindex="-1" role="dialog" aria-labelledby="bookPreviewModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="bookPreviewModalLabel">Buchdaten überprüfen</h5>
-                <button type="button" class="ml-2 btn btn-primary" id="confirmBookData">Bestätigen</button>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h2 class="modal-title" id="bookPreviewModalLabel">Buchdaten überprüfen</h2>
+                <button class="btn btn-warn close ms-auto" data-dismiss="modal" aria-label="Schließen">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

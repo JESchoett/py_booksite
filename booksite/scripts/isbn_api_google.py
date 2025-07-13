@@ -56,11 +56,13 @@ def get_book_info_by_isbn(isbn):
         print(f"Fehler bei der API-Anfrage: {e}")
         return "Fehler bei der Google API-Anfrage: {e}"
 
-def use_api():
+def use_api(isbn_to_search=None):
     """
     Example usage of the get_book_info_by_isbn function.
     """
-    isbn_to_search = "978-3-608-98701-0"
+    if not isbn_to_search:
+        isbn_to_search = "978-3-608-98701-0"
+        #isbn_to_search = "978-3-652-01048-1"
     book_info = get_book_info_by_isbn(isbn_to_search)
 
     if book_info:

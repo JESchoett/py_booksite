@@ -130,7 +130,6 @@ def book_details(nummer):
     dest_path = os.path.join('booksite', 'static', 'cover', cover_filename)
     if not os.path.isfile(dest_path):
         flash("Fehler beim Laden des Covers: Datei nicht gefunden.")
-    print(dest_path)
 
     if request.method == 'GET':
         return render_template('books/book_details.html', book=book, form=book_form, cover_filename=cover_filename)
@@ -138,7 +137,7 @@ def book_details(nummer):
         if book_form.validate_on_submit():
             if book:
                 alterBookOverForm(book=book, book_form=book_form, db=db)
-        return redirect(url_for('core.index'))
+        return redirect(url_for('book.index'))
 
 @books.route('/book_delete/<nummer>', methods=['DELETE'])
 @login_required

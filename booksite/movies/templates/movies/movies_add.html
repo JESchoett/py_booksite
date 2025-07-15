@@ -14,7 +14,7 @@
                 <div class="col-md-12 mb-3">
                     <label for="isbn" >ISBN</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ form.isbn.data or '' }}" placeholder="Buch via ISBN suchen">
+                        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ form.isbn.data or '' }}" placeholder="Film via ISBN suchen">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="fetchBookData"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
@@ -141,13 +141,13 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="inhaltsangabe" class="form-label">Inhaltsangabe</label>
-                    <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" placeholder="Inhaltsangabe des Buches">{{ form.inhaltsangabe.data or '' }}</textarea>
+                    <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" placeholder="Inhaltsangabe des Filmes">{{ form.inhaltsangabe.data or '' }}</textarea>
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="form-group">
-                    <button type="Einfügen" class="btn btn-primary text-uppercase" id="add-book-button">Buch hinzufügen</button>
+                    <button type="Einfügen" class="btn btn-primary text-uppercase" id="add-book-button">Film hinzufügen</button>
                 </div>
             </div>
         </form>
@@ -158,7 +158,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="bookPreviewModalLabel">Buchdaten überprüfen</h2>
+                <h2 class="modal-title" id="bookPreviewModalLabel">Filmdaten überprüfen</h2>
                 <button class="btn btn-warn close ms-auto" data-dismiss="modal" aria-label="Schließen">
                     <span aria-hidden="true">&times;</span>
                 </button>

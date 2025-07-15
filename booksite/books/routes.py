@@ -137,7 +137,7 @@ def book_details(nummer):
         if book_form.validate_on_submit():
             if book:
                 alterBookOverForm(book=book, book_form=book_form, db=db)
-        return redirect(url_for('book.index'))
+        return redirect(url_for('books.index'))
 
 @books.route('/book_delete/<nummer>', methods=['DELETE'])
 @login_required

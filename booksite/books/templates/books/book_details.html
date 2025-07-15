@@ -163,7 +163,7 @@
         }).then(({status, body}) => {
             if (status === 200) {
                 alert(body.message);  // Show success message
-                window.location.href = "{{ url_for('core.index') }}";  // Redirect after deletion
+                window.location.href = "{{ url_for('books.index') }}";  // Redirect after deletion
             } else {
                 alert(body.error);  // Show error message
             }

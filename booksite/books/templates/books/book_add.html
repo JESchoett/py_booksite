@@ -3,10 +3,10 @@
 {% block title %}Buch Anlegen{% endblock %}
 
 {% block content %}
- 
+
 <h1>Neues Buch anlegen</h1>
 <div class="new-data">
- 
+
         <form method="POST" enctype="multipart/form-data" action="{{ url_for('books.book_add') }}">
 
             {{ form.hidden_tag() }}
@@ -28,13 +28,13 @@
 
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-end mb-3">
-                    <button id="clearButton" class="btn btn-warn">
+                    <button id="clearButton" type="reset" class="btn btn-warn">
                         <span class="d-none d-sm-inline ms-2">Alle Eingaben löschen</span>
                          <i class="fa-solid fa-trash"></i>
                     </button>
-                 </div> 
-            </div>   
-            
+                 </div>
+            </div>
+
 
             <div class="row">
                 <div class="col-md-12 mb-3">
@@ -52,13 +52,13 @@
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="bildName">Bild</label>
+                    <label for="bild">Bild</label>
                     <div>
                         <div class="mb-1">
                             <img id="bildCover" src="{{ url_for('static', filename=cover_filename) }}" alt="Book Image" class="img-fluid">
                         </div>
                         <div class="mb-1">
-                            <input type="text" class="form-control" id="bildName" name="bildName" value="{{ form.bildName.data or '' }}" placeholder="Bild Name">
+                            <input type="text" class="form-control" id="bild" name="bild" value="{{ form.bild.data or '' }}" placeholder="Bild Name">
                         </div>
                         <div class="mb-1">
                             <input type="file" class="form-control form-control-sm pb-1" id="bildCoverInput" name="bildCoverInput" accept="image/*">
@@ -73,8 +73,8 @@
                     <label for="autor" class="form-label">Autor*</label>
                     <input type="text" class="form-control" id="autor" name="autor" value="{{ form.autor.data or '' }}">
                 </div>
-                
-                
+
+
 
                 <div class="col-md-6 mb-3">
                     <label for="genre" class="form-label">Genre</label>
@@ -110,7 +110,7 @@
                     <input type="text" class="form-control" id="standort" name="standort" value="{{ form.standort.data or '' }}" placeholder="Standort">
                 </div>
 
-                
+
 
                 <div class="col-md-6 mb-3">
                     <label for="subgenreRomane" class="form-label">Subgenre Romane</label>
@@ -250,7 +250,7 @@
     </div>
 </div>
 
-<script>
+<script type="module">
     function initializePreviewElements() {
         document.getElementById('previewTitel').value = '';
         document.getElementById('previewAutor').value = '';
@@ -356,7 +356,7 @@
             document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
 
             document.getElementById('bildCover').src = document.getElementById('previewCoverBild').src;
-            document.getElementById('bildName').value = document.getElementById('previewBildText').value;
+            document.getElementById('bild').value = document.getElementById('previewBildText').value;
 
             // Hide modal
             $('#bookPreviewModal').modal('hide');
@@ -380,21 +380,10 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('bildCover').src = e.target.result;
-                document.getElementById('bildName').value = file.name;
+                document.getElementById('bild').value = file.name;
             };
             reader.readAsDataURL(file);
         }
-    });
-
-
-    document.getElementById('clearButton').addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent form submission
-        const form = this.closest('form');
-        if (form) {
-            form.reset();
-        }
-        // Clear image preview if needed
-        document.getElementById('bildCover').src = "{{ url_for('static', filename=cover_filename) }}";
     });
 
 </script>

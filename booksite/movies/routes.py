@@ -95,7 +95,7 @@ def movies_add():
                     return render_template("movies/movies_add.html", form=movie_form, cover_filename=cover_filename)
 
                 addMovieOverForm(movie_form=movie_form, db=db)
-                return redirect(url_for('books.index'))
+                return redirect(url_for('movies.index'))
             else:
                 # If an img is given: keep that img
                 if movie_form.bildCoverInput.data:
@@ -105,19 +105,28 @@ def movies_add():
                 print(movie_form.errors)
                 flash("Fehler beim Speichern: Autor und Titel sind Pflichtfelder.")
                 movie_form = MovieForm(request.form)
-        return render_template("books/book_add.html", form=movie_form, cover_filename=cover_filename)
+        return render_template("movies/movies_add.html", form=movie_form, cover_filename=cover_filename)
+
 
 @movies.route('/movie_details/<nummer>', methods=['GET', 'POST'])
 @login_required
 def movie_details(nummer):
     movie = Movies.query.filter(Movies.nummer == nummer).first()
     movie_form = MovieForm(obj=movie)
+    movie_form.bild.data = movie.bild
+    cover_filename = movie.bild if movie.bild else 'defaultCover.png'
+
+    dest_path = os.path.join('booksite', 'static', 'cover', cover_filename)
+    if not os.path.isfile(dest_path):
+        flash("Fehler beim Laden des Covers: Datei nicht gefunden.")
+
     if request.method == 'GET':
-        return render_template('movies/movies_details.html', movie=movie, form=movie_form)
+        return render_template('movies/movies_details.html', movie=movie, form=movie_form, cover_filename=cover_filename)
     elif request.method == 'POST':
-        if movie:
-            alterMovieOverForm(movie=movie, movie_form=movie_form, db=db)
-            return redirect(url_for('core.index'))
+        if movie_form.validate_on_submit():
+            if movie:
+                alterMovieOverForm(movie=movie, movie_form=movie_form, db=db)
+        return redirect(url_for('movies.index'))
 
 @movies.route('/movies_delete/<nummer>', methods=['DELETE'])
 @login_required

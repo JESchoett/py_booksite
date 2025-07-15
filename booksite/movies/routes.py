@@ -1,12 +1,15 @@
 from flask import render_template, request, redirect, url_for, Blueprint, flash, session
 from flask_login import login_required
-
-from sqlalchemy import text
+from werkzeug.datastructures import CombinedMultiDict
 
 from booksite.app import db
 
 from booksite.movies.models import Movies
 from booksite.movies.movieForm import MovieForm
+
+from booksite.scripts.cover_file_manager import save_cover, move_file, remove_file
+
+import os
 
 movies = Blueprint('movies', __name__, template_folder='templates')
 
@@ -66,10 +69,43 @@ def movies_add():
     else:
         movie_form = MovieForm()
         if request.method == 'GET':
-            return render_template("movies/movies_add.html", form=movie_form)
+            cover_filename = 'defaultCover.png'
+            return render_template("movies/movies_add.html", form=movie_form, cover_filename=cover_filename)
         elif request.method == 'POST':
-            addMovieOverForm(movie_form=movie_form, db=db)
-            return redirect(url_for('core.index'))
+            # Use CombinedMultiDict to allow file download
+            movie_form = MovieForm(CombinedMultiDict([request.form, request.files]))
+
+            # If no cover is given, use the default cover, else use the tempCover.png
+            cover_filename = 'defaultCover.png'
+
+            if movie_form.validate_on_submit():
+                return_value = "Saving the user Input"
+                if movie_form.bildCoverInput.data:
+                    cover_filename = 'tempCover.png'
+
+                    return_value = save_cover(movie_form.bildCoverInput.data)
+                    if return_value == 0:
+                        return_value, movie_form.bild.data = move_file(movie_form.bild.data)
+                else:
+                    return_value = 0
+
+                if return_value != 0:
+                    flash(f"{return_value}")
+                    movie_form = MovieForm(request.form)
+                    return render_template("movies/movies_add.html", form=movie_form, cover_filename=cover_filename)
+
+                addMovieOverForm(movie_form=movie_form, db=db)
+                return redirect(url_for('books.index'))
+            else:
+                # If an img is given: keep that img
+                if movie_form.bildCoverInput.data:
+                    save_cover(movie_form.bildCoverInput.data)
+                    cover_filename = 'tempCover.png'
+
+                print(movie_form.errors)
+                flash("Fehler beim Speichern: Autor und Titel sind Pflichtfelder.")
+                movie_form = MovieForm(request.form)
+        return render_template("books/book_add.html", form=movie_form, cover_filename=cover_filename)
 
 @movies.route('/movie_details/<nummer>', methods=['GET', 'POST'])
 @login_required

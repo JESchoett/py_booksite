@@ -1,12 +1,389 @@
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form %}
 {% block title %}Film Anlegen{% endblock %}
+
 {% block content %}
 
 <h1>Neuen Film anlegen</h1>
 <div class="new-data">
-    <div class="container">
-        {{ render_form(form) }}
+
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('movies.movies_add') }}">
+
+        {{ form.hidden_tag() }}
+             <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="isbn" >ISBN</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ form.isbn.data or '' }}" placeholder="Buch via ISBN suchen">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="fetchBookData"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="loadingSpinner" class=" spinner-border text-primary" role="status" style="display: none;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-end mb-3">
+                    <button id="clearButton" type="reset" class="btn btn-warn">
+                        <span class="d-none d-sm-inline ms-2">Alle Eingaben löschen</span>
+                         <i class="fa-solid fa-trash"></i>
+                    </button>
+                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="url" >Daten geholt von</label>
+                    <div class="input-group">
+                        <a type="text" class="form-control" id="url" name="url" placeholder="URL zur Infoseite"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="titel">Titel*</label>
+                    <div>
+                        <textarea class="form-control" id="titel" name="titel" rows="5" value="{{ form.titel.data or '' }}" placeholder="Titel"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="bild">Bild</label>
+                    <div>
+                        <div class="mb-1">
+                            <img id="bildCover" src="{{ url_for('static', filename=cover_filename) }}" alt="Book Image" class="img-fluid">
+                        </div>
+                        <div class="mb-1">
+                            <input type="text" class="form-control" id="bild" name="bild" value="{{ form.bild.data or '' }}" placeholder="Bild Name">
+                        </div>
+                        <div class="mb-1">
+                            <input type="file" class="form-control form-control-sm pb-1" id="bildCoverInput" name="bildCoverInput" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="subtitel" class="form-label">Zwischentitel</label>
+                    <input type="text" class="form-control" id="subtitel" name="subtitel" value="{{ form.subtitel.data or '' }}" placeholder="Subtitel">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="autor" class="form-label">Regisseur*</label>
+                    <input type="text" class="form-control" id="autor" name="autor" value="{{ form.autor.data or '' }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="genre" class="form-label">Genre</label>
+                    <input type="text" class="form-control" id="genre" name="genre" value="{{ form.genre.data or '' }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="format" class="form-label">Format</label>
+                    <input type="text" class="form-control" id="format" name="format" value="{{ form.format.data or '' }}" placeholder="Format">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="verlag" class="form-label">Verlag</label>
+                    <input type="text" class="form-control" id="verlag" name="verlag" value="{{ form.verlag.data or '' }}" placeholder="Verlag">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="laenge" class="form-label">laenge</label>
+                    <input type="text" class="form-control" id="laenge" name="laenge" value="{{ form.laenge.data or '' }}" placeholder="laenge">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="preis" class="form-label">Preis</label>
+                    <input type="number" class="form-control" id="preis" name="preis" step="0.01" value="{{ form.preis.data or '' }}" placeholder="Preis">
+                </div>
+                                <div class="col-md-6 mb-3">
+                    <label for="jahr" class="form-label">Erscheinungsjahr</label>
+                    <input type="number" class="form-control" id="jahr" name="jahr" value="{{ form.jahr.data or '' }}" placeholder="Jahr">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="standort" class="form-label">Standort</label>
+                    <input type="text" class="form-control" id="standort" name="standort" value="{{ form.standort.data or '' }}" placeholder="Standort">
+                </div>
+
+
+
+                <div class="col-md-6 mb-3">
+                    <label for="subgenreRomane" class="form-label">Subgenre Romane</label>
+                    <input type="text" class="form-control" id="subgenreRomane" name="subgenreRomane" value="{{ form.subgenreRomane.data or '' }}" placeholder="Subgenre Romane">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="subgenreSachbuchRatgeber" class="form-label">Subgenre Sachbuch/Ratgeber</label>
+                    <input type="text" class="form-control" id="subgenreSachbuchRatgeber" name="subgenreSachbuchRatgeber" value="{{ form.subgenreSachbuchRatgeber.data or '' }}" placeholder="Subgenre Sachbuch/Ratgeber">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="subgenreRatgeber" class="form-label">Subgenre Ratgeber</label>
+                    <input type="text" class="form-control" id="subgenreRatgeber" name="subgenreRatgeber" value="{{ form.subgenreRatgeber.data or '' }}" placeholder="Subgenre Ratgeber">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="auflage" class="form-label">Auflage</label>
+                    <input type="text" class="form-control" id="auflage" name="auflage" value="{{ form.auflage.data or '' }}" placeholder="Auflage">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="schlagw" class="form-label">Schlagwort</label>
+                    <input type="text" class="form-control" id="schlagw" name="schlagw" value="{{ form.schlagw.data or '' }}" placeholder="Schlagwort">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="bemerkungen" class="form-label">Bemerkungen</label>
+                    <textarea class="form-control" id="bemerkungen" name="bemerkungen" rows="5" placeholder="Eigene Bemerkungen">{{ form.bemerkungen.data or '' }}</textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="inhaltsangabe" class="form-label">Inhaltsangabe</label>
+                    <textarea class="form-control" id="inhaltsangabe" name="inhaltsangabe" rows="5" placeholder="Inhaltsangabe des Buches">{{ form.inhaltsangabe.data or '' }}</textarea>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="form-group">
+                    <button type="Einfügen" class="btn btn-primary text-uppercase" id="add-book-button">Buch hinzufügen</button>
+                </div>
+            </div>
+        </form>
+</div>
+
+
+<div class="modal fade" id="bookPreviewModal" tabindex="-1" role="dialog" aria-labelledby="bookPreviewModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="bookPreviewModalLabel">Buchdaten überprüfen</h2>
+                <button class="btn btn-warn close ms-auto" data-dismiss="modal" aria-label="Schließen">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="previewForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewTitel">Titel</label>
+                            <textarea class="form-control" id="previewTitel" rows="5"></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewBildText">Bild</label>
+                            <input type="text" class="form-control" id="previewBildText">
+                            <img id="previewCoverBild" src="" alt="Book Image" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewAutor">Autor</label>
+                            <input type="text" class="form-control" id="previewAutor">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewLaenge">Laenge Anzahl</label>
+                            <input type="text" class="form-control" id="previewLaenge">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewGenre">Genre</label>
+                            <input type="text" class="form-control" id="previewGenre">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewVerlag">Verlag</label>
+                            <input type="text" class="form-control" id="previewVerlag">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewISBN10">ISBN-10</label>
+                            <input type="text" class="form-control" id="previewISBN10">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewISBN13">ISBN-13</label>
+                            <input type="text" class="form-control" id="previewISBN13">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewPreis">Preis</label>
+                            <input type="number" class="form-control" id="previewPreis" name="previewPreis" step="0.01">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewJahr">Jahr</label>
+                            <input type="number" class="form-control" id="previewJahr">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="previewFormat">Format</label>
+                            <input type="text" class="form-control" id="previewFormat">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="previewAuflage">Auflage</label>
+                            <input type="text" class="form-control" id="previewAuflage">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="previewInhaltsangabe">Beschreibung</label>
+                            <textarea class="form-control" id="previewInhaltsangabe" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="previewUrl">Daten geholt von</label>
+                            <a id="previewUrl" class="form-control" style="height: auto;" href="#" target="_blank"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="ml-2 btn btn-primary" id="confirmBookDataFooter">Bestätigen</button>
+            </div>
+        </div>
     </div>
 </div>
+
+<script type="module">
+    function initializePreviewElements() {
+        document.getElementById('previewTitel').value = '';
+        document.getElementById('previewAutor').value = '';
+        document.getElementById('previewGenre').value = '';
+        document.getElementById('previewVerlag').value = '';
+        document.getElementById('previewISBN10').value = '';
+        document.getElementById('previewISBN13').value = '';
+        document.getElementById('previewPreis').value = '';
+        document.getElementById('previewFormat').value = '';
+        document.getElementById('previewSeiten').value = '';
+        document.getElementById('previewInhaltsangabe').value = '';
+        document.getElementById('previewAuflage').value = '';
+        document.getElementById('previewJahr').value = '';
+        document.getElementById('previewBildText').value = '';
+        document.getElementById('previewCoverBild').src = '';
+        document.getElementById('previewUrl').innerText = '';
+        document.getElementById('previewUrl').href = '#';
+    }
+
+    document.getElementById('fetchBookData').addEventListener('click', function() {
+        initializePreviewElements();
+
+        const isbn = document.getElementById('isbn').value;
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        console.log('Fetching book data for ISBN:', isbn);
+        if (isbn) {
+            loadingSpinner.style.display = 'inline-block';
+
+            fetch('/books/get_isbn_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ isbn: isbn })
+            })
+            .then(response => response.json())
+            .then(data => {
+            loadingSpinner.style.display = 'none';
+
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    console.log('Fetched book data:', data);
+                    // Populate Modal fields
+                    document.getElementById('previewTitel').value = data.Title || '';
+                    document.getElementById('previewAutor').value = data.Autor || '';
+                    document.getElementById('previewGenre').value = data.Genre || '';
+                    document.getElementById('previewVerlag').value = data.Verlag || '';
+                    document.getElementById('previewISBN10').value = data['ISBN-10'] || '';
+                    document.getElementById('previewISBN13').value = data['ISBN-13'] || '';
+                    document.getElementById('previewPreis').value = data.Preis || '';
+                    document.getElementById('previewFormat').value = data.Einband || '';
+                    document.getElementById('previewSeiten').value = data['laenge'] || '';
+                    document.getElementById('previewInhaltsangabe').value = data['Beschreibung'] || '';
+                    document.getElementById('previewAuflage').value = data.Auflage || '';
+                    document.getElementById('previewJahr').value = data['Jahr'] || '';
+
+                    document.getElementById('previewBildText').value = data.Bild || '';
+                    // Set image source and log it
+                    const previewCoverBild = document.getElementById('previewCoverBild');
+
+                    // appending a timestemp to the image url to prevent caching
+                    const timestamp = new Date().getTime();
+                    previewCoverBild.src = "{{ url_for('static', filename='tempCover.png') }}" + '?t=' + timestamp;
+
+                    // making the url clickable
+                    const previewUrl = document.getElementById('previewUrl');
+                    previewUrl.innerText = data.Url || '';
+                    previewUrl.href = data.Url || '#';
+
+                    // Show the modal
+                    $('#bookPreviewModal').modal('show');
+                }
+            })
+            .catch(error => {
+                loadingSpinner.style.display = 'none';
+                console.error('Error fetching book data:', error);
+            });
+        }
+    });
+
+    document.querySelectorAll('#confirmBookData, #confirmBookDataFooter').forEach(button => {
+        button.addEventListener('click', function() {
+            // Copy data from preview modal to form
+            document.getElementById('titel').value = document.getElementById('previewTitel').value;
+            document.getElementById('autor').value = document.getElementById('previewAutor').value;
+            document.getElementById('genre').value = document.getElementById('previewGenre').value;
+            document.getElementById('verlag').value = document.getElementById('previewVerlag').value;
+
+            document.getElementById('isbn').value = document.getElementById('previewISBN13').value;
+            if (!document.getElementById('isbn').value) {
+                document.getElementById('isbn').value = document.getElementById('previewISBN10').value;
+            }
+
+            document.getElementById('url').textContent = document.getElementById('previewUrl').innerText;
+
+            document.getElementById('preis').value = document.getElementById('previewPreis').value;
+            document.getElementById('jahr').value = document.getElementById('previewJahr').value;
+            document.getElementById('format').value = document.getElementById('previewFormat').value;
+            document.getElementById('seiten').value = document.getElementById('previewSeiten').value;
+            document.getElementById('inhaltsangabe').value = document.getElementById('previewInhaltsangabe').value;
+            document.getElementById('auflage').value = document.getElementById('previewAuflage').value;
+
+            document.getElementById('bildCover').src = document.getElementById('previewCoverBild').src;
+            document.getElementById('bild').value = document.getElementById('previewBildText').value;
+
+            // Hide modal
+            $('#bookPreviewModal').modal('hide');
+        }
+    );
+    });
+
+    document.querySelectorAll('.close').forEach(function(btn) {
+        btn.addEventListener('click', function () {
+            document.getElementById('bookPreviewModal').classList.remove('show');
+            document.getElementById('bookPreviewModal').style.display = 'none';
+            document.body.classList.remove('modal-open');
+            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        });
+    });
+
+    document.getElementById('bildCoverInput').addEventListener('change', function(event) {
+        console.log('Image file selected:', event.target.files[0]);
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('bildCover').src = e.target.result;
+                document.getElementById('bild').value = file.name;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+</script>
+
+
 {% endblock %}

@@ -146,6 +146,9 @@ def book_details(nummer):
 @books.route('/book_delete/<nummer>', methods=['DELETE'])
 @login_required
 def book_delete(nummer):
+    if session["userRoll"] != "admin":
+        flash("insufficient rights")
+        return redirect(url_for('core.index'))
     book = Book.query.filter(Book.nummer == nummer).first()
     if book:
         db.session.delete(book)

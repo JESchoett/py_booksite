@@ -133,6 +133,9 @@ def movie_details(nummer):
 @movies.route('/movies_delete/<nummer>', methods=['DELETE'])
 @login_required
 def movies_delete(nummer):
+    if session["userRoll"] != "admin":
+        flash("insufficient rights")
+        return redirect(url_for('core.index'))
     movie = Movies.query.filter(Movies.nummer == nummer).first()
     if movie:
         db.session.delete(movie)

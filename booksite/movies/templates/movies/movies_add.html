@@ -10,6 +10,9 @@
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('movies.movies_add') }}">
 
         {{ form.hidden_tag() }}
+        <div class="row">
+            <a href="{{ url_for('books.index') }}" class="btn btn-secondary" id="back">Zurück zur Übersicht</a>
+        </div>
              <div class="row">
                 <div class="col-md-12 mb-3">
                     <label for="isbn" >ISBN</label>
@@ -384,6 +387,4 @@
     });
 
 </script>
-
-
 {% endblock %}

@@ -62,7 +62,6 @@ def alterMovieOverForm(movie, movie_form, db):
 @movies.route('/movies_add', methods=['GET', 'POST'])
 @login_required
 def movies_add():
-    print(session["userRoll"])
     if session["userRoll"] != "admin":
         flash("insufficient rights")
         return redirect(url_for('core.index'))
@@ -112,6 +111,9 @@ def movies_add():
 @login_required
 def movie_details(nummer):
     movie = Movies.query.filter(Movies.nummer == nummer).first()
+    if not movie:
+        return redirect(url_for('movies.index'))
+
     movie_form = MovieForm(obj=movie)
     movie_form.bild.data = movie.bild
     cover_filename = movie.bild if movie.bild else 'defaultCover.png'

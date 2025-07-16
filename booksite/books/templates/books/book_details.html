@@ -11,7 +11,7 @@
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
          <div class="row">
-            <button action="{{ url_for('books.index') }}" class="btn btn-secondary" id="back">Zurück zur Übersicht</button>
+            <a href="{{ url_for('books.index') }}" class="btn btn-secondary" id="back">Zurück zur Übersicht</a>
          </div>
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -45,7 +45,7 @@
         </div>
 
             <div class="col-md-6 d-flex align-items-center mb-3">
-                <label for="autor" class="col-md-4">Autor</label>
+                <label for="autor" class="col-md-4">Autor*</label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="autor" name="autor" value="{{ form.autor.data or '' }}" placeholder="Es muss ein Autor eingegeben werden!">
                 </div>
@@ -143,17 +143,16 @@
                     <button type="Einfügen" class="btn btn-primary btn-block">Buch ändern</button>
                 </div>
                 <div class="form-group col-6">
-                    <button class="btn btn-warn btn-block" onclick="deleteBook({{ book['nummer'] }})">Löschen</button>
+                    <button class="btn btn-warn btn-block" onclick="deleteBook( {{ book['nummer'] }} )">Löschen</button>
                 </div>
             </div>
         </div>
     </form>
-
 </div>
 
 
-<!-- Delete functionality -->
 <script type="text/javascript">
+
     function deleteBook(nr) {
         console.log("Book delete: ", nr);
         fetch('{{ url_for("books.book_delete", nummer="") }}' + nr, {
@@ -162,10 +161,9 @@
             return response.json().then(data => ({status: response.status, body: data}));
         }).then(({status, body}) => {
             if (status === 200) {
-                alert(body.message);  // Show success message
-                window.location.href = "{{ url_for('books.index') }}";  // Redirect after deletion
+                alert(body.message);
             } else {
-                alert(body.error);  // Show error message
+                alert(body.error);
             }
         }).catch(error => {
             console.error('Error during fetching: ', error);

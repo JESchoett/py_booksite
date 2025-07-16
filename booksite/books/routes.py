@@ -123,8 +123,12 @@ def book_add():
 @login_required
 def book_details(nummer):
     book = Book.query.filter(Book.nummer == nummer).first()
+    if not book:
+        return redirect(url_for('books.index'))
+
     book_form = BookForm(obj=book)
-    book_form.bild.data = book.bild
+    if book.bild:
+        book_form.bild.data = book.bild
     cover_filename = book.bild if book.bild else 'defaultCover.png'
 
     dest_path = os.path.join('booksite', 'static', 'cover', cover_filename)
@@ -147,8 +151,9 @@ def book_delete(nummer):
         db.session.delete(book)
         remove_file(book.bild)
         db.session.commit()
-        return {f"Book nr. {nummer} deleted."}, 200
+        return {f"Movie nr. {nummer} deleted."}, 200
     return {f"ERROR: Book nr. {nummer} was not deleted."}, 404
+
 
 @books.route('/get_isbn_data', methods=['POST'])
 @login_required

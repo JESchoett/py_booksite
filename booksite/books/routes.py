@@ -17,13 +17,21 @@ books = Blueprint('books', __name__, template_folder='templates')
 @books.route('/')
 @login_required
 def index():
-    if request.method == 'GET':
-        if session["userRoll"] == "admin":
-            all_books = Book.query.all()
-        else:
-            #all_books = db.session.execute(text('SELECT * FROM buecher WHERE schlagw != "versteckt"'))
-            all_books = Book.query.filter(Book.schlagw != "versteckt").all()
-        return render_template("books/book_overview.html", all_books=all_books)
+    if session["userRoll"] == "admin":
+        all_books = Book.query.all()
+    else:
+        #all_books = db.session.execute(text('SELECT * FROM buecher WHERE schlagw != "versteckt"'))
+        all_books = Book.query.filter(Book.schlagw != "versteckt").all()
+    return render_template("books/book_overview.html", all_books=all_books)
+
+@books.route('/book_coverview', methods=['GET'])
+@login_required
+def book_coverview():
+    if session["userRoll"] == "admin":
+        all_books = Book.query.all()
+    else:
+        all_books = Book.query.filter(Book.schlagw != "versteckt").all()
+    return render_template("books/book_coverview.html", all_books=all_books)
 
 def addBookOverForm(book_form, db):
     # adding a new Book to the DB

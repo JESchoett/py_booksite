@@ -126,10 +126,18 @@ h1 {
   box-shadow: 0 0 0 0.25rem #43a71c80 !important; 
 }
 
+#coverBild, #previewCoverBild #bildCover{
+       max-width: 200px;
+       max-height: 250px;
+       width: auto;
+       height: auto;
+       display: block;
+       margin-top: 8px;
+}
 
-#coverBild, #previewCoverBild {
-       max-width: 100px;
-       max-height: 150px;
+#coverview{
+       max-width: 300px;
+       max-height: 350px;
        width: auto;
        height: auto;
        display: block;
